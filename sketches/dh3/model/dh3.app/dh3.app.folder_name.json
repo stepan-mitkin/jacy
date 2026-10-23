@@ -1,0 +1,7 @@
+{
+    "type": "field",
+    "datatype": "string",
+    "nullable": true,
+    "maxlength": 100,
+    "normalize": "truncate"
+}

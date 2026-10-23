@@ -1,0 +1,6 @@
+{
+    "type": "field",
+    "datatype": "string",
+    "nullable": false,
+    "values": ["drakon", "graf", "free"]
+}

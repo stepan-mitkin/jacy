@@ -1,0 +1,19 @@
+{
+    "type": "field",
+    "datatype": "dh3.multi_widget",
+    "data": {
+        "initial": "start_screen",
+        "views": {
+            "start_screen": {
+                "datatype": "dh3.start_screen"
+            },
+            "panic_screen": {
+                "datatype": "dh3.panic_screen"
+            },
+            "work_screen": {
+                "datatype": "dh3.work_screen"
+            }
+        }
+    },
+    "nullable": false
+}

@@ -1,0 +1,6 @@
+{
+    "type": "module",
+    "root": {
+        "datatype": "dh3.app"
+    }
+}

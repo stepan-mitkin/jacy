@@ -1,0 +1,6 @@
+{
+    "type": "field",
+    "datatype": "string",
+    "nullable": false,
+    "maxlength": 50
+}

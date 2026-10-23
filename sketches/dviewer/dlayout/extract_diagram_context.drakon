@@ -1,0 +1,49 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "diagram\ncontext",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "8",
+            "content": "copy_str(diagram.name, context.name)"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "item; diagram.items"
+        },
+        "6": {
+            "type": "question",
+            "one": "4",
+            "two": "7",
+            "flag1": 0,
+            "content": "str_equals_cstr(item.type, \"branch\")"
+        },
+        "7": {
+            "type": "action",
+            "one": "4",
+            "content": "insert(\n    context.branches,\n    item.id,\n    item.branchId,\n    item.content,\n    item.one\n)"
+        },
+        "8": {
+            "type": "action",
+            "one": "5",
+            "content": "copy_str(diagram.params, context.params)"
+        }
+    }
+}

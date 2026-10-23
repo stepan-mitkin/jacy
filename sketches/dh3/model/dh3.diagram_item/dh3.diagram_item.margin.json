@@ -1,0 +1,5 @@
+{
+    "type": "field",
+    "datatype": "integer",
+    "nullable": true
+}

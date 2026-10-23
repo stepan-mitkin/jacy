@@ -1,0 +1,49 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "context = diagram_context()"
+        },
+        "4": {
+            "type": "action",
+            "one": "5",
+            "content": "extract_diagram_context(diagram, context)"
+        },
+        "5": {
+            "type": "question",
+            "one": "6",
+            "two": "7",
+            "flag1": 0,
+            "content": "is_silhouette(context)"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "layout_primitive(\n    diagram,\n    context,\n    output\n)"
+        },
+        "7": {
+            "type": "action",
+            "one": "1",
+            "content": "layout_silhouette(\n    diagram,\n    context,\n    output\n)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": true,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "diagram: dhub_diagram\noutput: diagram_primitives"
+}

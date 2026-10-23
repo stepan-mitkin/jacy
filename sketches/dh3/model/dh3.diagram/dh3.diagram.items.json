@@ -1,0 +1,14 @@
+{
+    "type": "field",
+    "datatype": "map",
+    "nullable": true,
+    "key": {
+        "name": "id",
+        "datatype": "string",
+        "maxlength": 30
+    },
+    "value": {
+        "datatype": "dh3.diagram_item",
+        "nullable": false
+    }
+}

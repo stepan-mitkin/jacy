@@ -1,0 +1,8 @@
+{
+    "type": "field",
+    "datatype": "string",
+    "nullable": false,
+    "maxlength": 50,
+    "normalize": "trim",
+    "validate": "isGoodFilename"
+}
