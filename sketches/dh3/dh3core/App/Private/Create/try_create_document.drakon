@@ -1,0 +1,37 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "self.server.create_document(\n    doc_info,\n    on_document_created,\n    on_failed_to_create_document,\n    self\n)"
+        },
+        "4": {
+            "type": "action",
+            "one": "3",
+            "content": "doc_info = {\n    parent_id: get_current_folder(self),\n    type: self.doc_creation.type,\n    name: name\n}"
+        },
+        "5": {
+            "type": "action",
+            "one": "4",
+            "content": "self.widgets.show_wait()"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "name\nself"
+}

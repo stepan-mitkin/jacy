@@ -1,5 +1,6 @@
 {
     "language": "JS2604",
     "outputFile": "../dh3core.js",
-    "format": "CommonJS"
+    "format": "unit",
+    "dependencies": ""
 }

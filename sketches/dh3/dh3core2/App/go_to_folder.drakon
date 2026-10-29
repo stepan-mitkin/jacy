@@ -1,0 +1,49 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "self\nfolder_id",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "7"
+        },
+        "4": {
+            "type": "question",
+            "one": "6",
+            "two": "5",
+            "flag1": 1,
+            "content": "self.safe_to_leave"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "widgets.ask_yes_no(\n    tr(\n        \"If you leave now, you will lose data\"\n    ),\n    tr(\"Leave\"),\n    tr(\"Cancel\"),\n    on_go_to_folder_confirmed,\n    self\n)"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "on_go_to_folder_confirmed(self)"
+        },
+        "7": {
+            "type": "action",
+            "one": "8",
+            "content": "self.go_to.folder_id = folder_id"
+        },
+        "8": {
+            "type": "action",
+            "one": "4",
+            "content": "self.widgets.show_wait()"
+        }
+    }
+}

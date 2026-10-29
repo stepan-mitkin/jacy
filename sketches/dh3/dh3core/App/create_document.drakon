@@ -1,0 +1,37 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "4": {
+            "type": "action",
+            "one": "1",
+            "content": "self.widgets.show_rich_choice_dialog(\n    tr(\"Choose diagram type\"),\n    on_document_type_chosen,\n    self\n)"
+        },
+        "5": {
+            "type": "action",
+            "one": "6",
+            "content": "self.doc_creation.name = \"\"\nself.doc_creation.type = \"\""
+        },
+        "6": {
+            "type": "action",
+            "one": "4",
+            "content": "options = [\n    {\n        img: \"drakon-type.png\",\n        name: tr(\"Drakon flowchart\"),\n        description: tr(\"...\"),\n        value: \"drakon\"\n    },\n    {\n        img: \"drakon-ai-type.png\",\n        name: tr(\n            \"Generate flowchart with AI\"\n        ),\n        description: tr(\"...\"),\n        value: \"drakon-id\"\n    },\n    {\n        img: \"graf-type.png\",\n        name: tr(\"Mind map\"),\n        description: tr(\"...\"),\n        value: \"graf\"\n    },\n    {\n        img: \"free-type.png\",\n        name: tr(\"Free-form diagram\"),\n        description: tr(\"...\"),\n        value: \"free\"\n    }\n]"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "self"
+}

@@ -1,0 +1,44 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "self.widgets.show_input_dialog(\n    mouse_pos,\n    tr(\"Enter diagram name\"),\n    \"\",\n    document_name_checker,\n    try_create_document,\n    self\n)"
+        },
+        "4": {
+            "type": "action",
+            "one": "3",
+            "content": "self.doc_creation.type = doc_type"
+        },
+        "5": {
+            "type": "question",
+            "one": "4",
+            "two": "6",
+            "flag1": 0,
+            "content": "doc_type === \"drakon-ai\""
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "create_drakon_with_ai(self)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "doc_type\nmouse_pos\nself"
+}

@@ -1,0 +1,103 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "4",
+            "content": "Remember current"
+        },
+        "4": {
+            "type": "action",
+            "one": "7",
+            "content": "self.widgets.hide_wait()"
+        },
+        "6": {
+            "type": "action",
+            "one": "13",
+            "content": "folder = get_from_cache(self, folder_id)"
+        },
+        "7": {
+            "type": "action",
+            "one": "6",
+            "content": "folder_id = self.go_to.folder_id"
+        },
+        "13": {
+            "type": "action",
+            "one": "17",
+            "content": "self.current.folder_id = folder_id"
+        },
+        "16": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 4,
+            "content": "Exit"
+        },
+        "17": {
+            "type": "branch",
+            "one": "25",
+            "branchId": 2,
+            "content": "Show in UI"
+        },
+        "18": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "19",
+            "content": "Recent"
+        },
+        "19": {
+            "type": "action",
+            "one": "16",
+            "content": "remember_in_recent(self, folder_id)"
+        },
+        "20": {
+            "type": "question",
+            "one": "21",
+            "two": "23",
+            "flag1": 1,
+            "content": "folder.type === \"folder\""
+        },
+        "21": {
+            "type": "action",
+            "one": "22",
+            "two": "",
+            "content": "show_folder_top(self, folder)"
+        },
+        "22": {
+            "type": "action",
+            "one": "18",
+            "two": "",
+            "content": "show_folder_content(self, folder)"
+        },
+        "23": {
+            "type": "action",
+            "one": "24",
+            "two": "",
+            "content": "show_diagram_top(self, folder)"
+        },
+        "24": {
+            "type": "action",
+            "one": "18",
+            "two": "",
+            "content": "show_diagram_content(self, folder)"
+        },
+        "25": {
+            "type": "action",
+            "one": "20",
+            "two": "",
+            "content": "select_folder_in_tree(self, folder_id)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "self"
+}

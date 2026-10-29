@@ -1,0 +1,49 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "self",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "question",
+            "one": "7",
+            "two": "5",
+            "flag1": 1,
+            "content": "self.go_to.current < self.go_to.path.length"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "on_path_fetched(self)"
+        },
+        "6": {
+            "type": "action",
+            "one": "8",
+            "content": "self.go_to.current++"
+        },
+        "7": {
+            "type": "action",
+            "one": "6",
+            "content": "folder_id = self.go_to.path[\n    self.go_to.current\n]"
+        },
+        "8": {
+            "type": "action",
+            "one": "1",
+            "content": "self.server.get_folder(\n    folder_id,\n    on_path_part,\n    on_generic_error,\n    self\n)"
+        }
+    }
+}
