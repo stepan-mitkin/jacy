@@ -22,5 +22,5 @@
         "algoprop": false,
         "lazy": false
     },
-    "params": "self"
+    "params": "folder_id"
 }
