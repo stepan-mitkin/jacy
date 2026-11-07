@@ -1,0 +1,57 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "9"
+        },
+        "5": {
+            "type": "action",
+            "one": "6",
+            "content": "self.tree.rename(folder_id, name)"
+        },
+        "6": {
+            "type": "action",
+            "one": "10",
+            "content": "self.folder_view.rename(folder_id, name)"
+        },
+        "9": {
+            "type": "action",
+            "one": "13",
+            "content": "rename_in_cache(folder_id, name)"
+        },
+        "10": {
+            "type": "action",
+            "one": "11",
+            "content": "self.search.rename(folder_id, name)"
+        },
+        "11": {
+            "type": "action",
+            "one": "1",
+            "content": "self.recent.rename(folder_id, name)"
+        },
+        "12": {
+            "type": "action",
+            "one": "5",
+            "content": "show_folder_top()"
+        },
+        "13": {
+            "type": "action",
+            "one": "12",
+            "content": "update_crumbs()"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "folder_id\nname"
+}

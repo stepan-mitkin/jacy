@@ -1,0 +1,127 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "7",
+            "content": "Get folder"
+        },
+        "7": {
+            "type": "action",
+            "one": "33",
+            "content": "folder = server.folders[folder_id]"
+        },
+        "11": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 4,
+            "content": "Exit"
+        },
+        "13": {
+            "type": "branch",
+            "branchId": 2,
+            "one": "21",
+            "content": "Get path from root"
+        },
+        "14": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "32",
+            "content": "Set values"
+        },
+        "15": {
+            "type": "loopend",
+            "one": "20",
+            "two": "",
+            "content": ""
+        },
+        "16": {
+            "type": "loopbegin",
+            "one": "31",
+            "two": "",
+            "content": "while current_parent"
+        },
+        "17": {
+            "type": "action",
+            "one": "30",
+            "two": "",
+            "content": "parent = server.folders[current_parent]"
+        },
+        "18": {
+            "type": "action",
+            "one": "16",
+            "two": "",
+            "content": "path = []"
+        },
+        "20": {
+            "type": "action",
+            "one": "14",
+            "two": "",
+            "content": "path.reverse()"
+        },
+        "21": {
+            "type": "action",
+            "one": "18",
+            "content": "current_parent = folder.parent"
+        },
+        "22": {
+            "type": "action",
+            "one": "35",
+            "content": "self.path = path"
+        },
+        "24": {
+            "type": "question",
+            "one": "29",
+            "two": "25",
+            "flag1": 1,
+            "content": "folder.parent"
+        },
+        "25": {
+            "type": "action",
+            "one": "29",
+            "content": "folder.name = self.project_name"
+        },
+        "29": {
+            "type": "action",
+            "one": "13",
+            "content": "cache_folder(self, folder)"
+        },
+        "30": {
+            "type": "action",
+            "one": "15",
+            "content": "cache_folder(self, parent)"
+        },
+        "31": {
+            "type": "action",
+            "one": "17",
+            "two": "",
+            "content": "path.push(current_parent)"
+        },
+        "32": {
+            "type": "action",
+            "one": "22",
+            "content": "self.folder_id = folder_id"
+        },
+        "33": {
+            "type": "question",
+            "one": "24",
+            "two": "34",
+            "flag1": 1,
+            "content": "folder"
+        },
+        "34": {
+            "type": "action",
+            "one": "11",
+            "content": "return false"
+        },
+        "35": {
+            "type": "action",
+            "one": "11",
+            "content": "return true"
+        }
+    }
+}

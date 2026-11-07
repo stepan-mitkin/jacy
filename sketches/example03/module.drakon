@@ -11,16 +11,8 @@
         },
         "3": {
             "type": "action",
-            "one": "1"
+            "one": "1",
+            "content": "var x1\nvar y1\nvar x2\nvar y2\nvar distance"
         }
-    },
-    "keywords": {
-        "function": false,
-        "machine": false,
-        "async": false,
-        "export": false,
-        "algoprop": false,
-        "lazy": false
-    },
-    "params": "folder_id"
+    }
 }

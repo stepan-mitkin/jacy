@@ -1,0 +1,32 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "action",
+            "one": "5",
+            "content": "x1 = point1.x\ny1 = point1.y\nx2 = point2.x\ny2 = point2.y"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "return distance"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": true,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "point1\npoint2"
+}
