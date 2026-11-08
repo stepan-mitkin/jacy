@@ -16,16 +16,18 @@ function Distance() {
     }
     function calculateDistance(point1, point2) {
         var _plan_ = {}
+        var _result_ = calculateDistance_core(_plan_, point1, point2)
+        runtime.runTriggers(_plan_, _triggers_)
+        return _result_
+    }
+
+    function calculateDistance_core(_plan_, point1, point2) {
         x1 = point1.x;
         _plan_["chooseLineType"] = true
         y1 = point1.y;
-        _plan_["chooseLineType"] = true
         x2 = point2.x;
-        _plan_["chooseLineType"] = true
         y2 = point2.y;
-        _plan_["chooseLineType"] = true
-        runtime.runTriggers(_plan_, _triggers_)
-    }
+    }    
     
     function chooseLineType(_plan_) {
         var dx, dy;
