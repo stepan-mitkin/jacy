@@ -2,11 +2,15 @@ function TriggerRuntime05() {
     var unit = {}
     function runTriggers(plan, triggers) {
         var methods = getSortedTriggers(plan, triggers)
+        var ran = {}
         while (methods.length > 0) {
             plan = {}
             for (var methodName of methods) {
-                var method = triggers[methodName].fun
-                method(plan)
+                if (!(methodName in ran)) {
+                    ran[methodName] = true
+                    var method = triggers[methodName].fun
+                    method(plan)
+                }
             }
             methods = methods = getSortedTriggers(plan, triggers)
         }
