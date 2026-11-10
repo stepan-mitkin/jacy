@@ -1,0 +1,72 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "11"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "nsfun = astCopy.body[0]"
+        },
+        "4": {
+            "type": "action",
+            "one": "5",
+            "content": "nsfun.params.push(\n    createIdentifier(\"runtime\")\n)"
+        },
+        "5": {
+            "type": "action",
+            "one": "9",
+            "content": "classes = nsfun.body.body.filter(\n    isFunction\n)"
+        },
+        "7": {
+            "type": "loopend",
+            "one": "10",
+            "content": ""
+        },
+        "8": {
+            "type": "loopbegin",
+            "one": "13",
+            "content": "cls; classes"
+        },
+        "9": {
+            "type": "action",
+            "one": "8",
+            "content": "models = []"
+        },
+        "10": {
+            "type": "action",
+            "one": "1",
+            "content": "return {\n    ast: astCopy,\n    models: models\n}"
+        },
+        "11": {
+            "type": "action",
+            "one": "12",
+            "content": "astjs = JSON.stringify(ast)"
+        },
+        "12": {
+            "type": "action",
+            "one": "3",
+            "content": "astCopy = JSON.parse(astjs)"
+        },
+        "13": {
+            "type": "action",
+            "one": "7",
+            "content": "processClass(cls, models)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": true,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "ast"
+}

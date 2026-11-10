@@ -17,14 +17,14 @@
         },
         "5": {
             "type": "question",
-            "one": "4",
+            "one": "11",
             "two": "6",
             "flag1": 1,
             "content": "y1 === y2"
         },
         "6": {
             "type": "question",
-            "one": "7",
+            "one": "12",
             "two": "10",
             "flag1": 1,
             "content": "x1 === x2"
@@ -45,6 +45,16 @@
             "one": "9",
             "two": "",
             "content": "dx = x2 - x1\ndy = y2 - y1"
+        },
+        "11": {
+            "type": "action",
+            "one": "4",
+            "content": "reportShortcut(true)"
+        },
+        "12": {
+            "type": "action",
+            "one": "7",
+            "content": "reportShortcut(false)"
         }
     }
 }

@@ -1,0 +1,76 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\nprocedure",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "6"
+        },
+        "3": {
+            "type": "action",
+            "one": "14",
+            "content": "body = fun.body.body"
+        },
+        "4": {
+            "type": "action",
+            "one": "3",
+            "content": "fun = context.functions[procedure.name]"
+        },
+        "6": {
+            "type": "question",
+            "one": "4",
+            "two": "1",
+            "flag1": 0,
+            "content": "procedure.writes.length === 0"
+        },
+        "7": {
+            "type": "action",
+            "one": "1",
+            "content": "fun.body = rewriteAst(\n    {},\n    \"\",\n    fun.body,\n    planTriggers,\n    astContext\n)"
+        },
+        "8": {
+            "type": "action",
+            "one": "7",
+            "content": "astContext = {\n    plan: {},\n    varReads: context.varReads,\n    variables: context.variables\n}"
+        },
+        "9": {
+            "type": "action",
+            "one": "8",
+            "content": "body.push(\n    createCall(\n        createMember(\n            \"runtime\",\n            \"runTriggers\"\n        ),\n        [\"_plan_\", \"_triggers_\"]\n    )\n)"
+        },
+        "12": {
+            "type": "case",
+            "one": "16",
+            "two": null,
+            "content": "\"trigger\""
+        },
+        "13": {
+            "type": "case",
+            "one": "15",
+            "two": "12",
+            "content": "\"method\""
+        },
+        "14": {
+            "type": "select",
+            "one": "13",
+            "content": "procedure.type"
+        },
+        "15": {
+            "type": "action",
+            "one": "9",
+            "content": "body.unshift(\n    createDeclaration(\n        \"_plan_\",\n        createObjectExpression()\n    )\n)"
+        },
+        "16": {
+            "type": "action",
+            "one": "8",
+            "content": "fun.params.push(\n    createIdentifier(\"_plan_\")\n)"
+        }
+    }
+}

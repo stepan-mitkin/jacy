@@ -1,0 +1,95 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "question",
+            "one": "5",
+            "two": "1",
+            "flag1": 1,
+            "content": "node"
+        },
+        "5": {
+            "type": "question",
+            "one": "6",
+            "two": "1",
+            "flag1": 1,
+            "content": " typeof node === \"object\""
+        },
+        "6": {
+            "type": "question",
+            "one": "7",
+            "two": "1",
+            "flag1": 1,
+            "content": " typeof node.type === \"string\""
+        },
+        "7": {
+            "type": "action",
+            "one": "16",
+            "content": "stop = visitor(\n    parent,\n    property,\n    node,\n    data\n)"
+        },
+        "8": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "9": {
+            "type": "loopbegin",
+            "one": "11",
+            "content": "name, value; node"
+        },
+        "11": {
+            "type": "question",
+            "one": "21",
+            "two": "19",
+            "flag1": 0,
+            "content": "Array.isArray(value)"
+        },
+        "16": {
+            "type": "question",
+            "one": "9",
+            "two": "1",
+            "flag1": 0,
+            "content": "stop"
+        },
+        "18": {
+            "type": "loopend",
+            "one": "8",
+            "two": "",
+            "content": ""
+        },
+        "19": {
+            "type": "loopbegin",
+            "one": "20",
+            "two": "",
+            "content": "item; value"
+        },
+        "20": {
+            "type": "action",
+            "one": "18",
+            "two": "",
+            "content": "traverseAst(\n    node,\n    name,\n    item,\n    visitor,\n    data\n)"
+        },
+        "21": {
+            "type": "action",
+            "one": "8",
+            "content": "traverseAst(\n    node,\n    name,\n    value,\n    visitor,\n    data\n)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "parent\nproperty\nnode\nvisitor\ndata"
+}

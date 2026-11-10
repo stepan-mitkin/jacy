@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Distance",
+    "variables": {
+      "x1": true,
+      "y1": true,
+      "x2": true,
+      "y2": true,
+      "distance": true
+    },
+    "methods": [
+      {
+        "type": "method",
+        "name": "calculateDistance",
+        "reads": [],
+        "writes": [
+          "x1",
+          "x2",
+          "y1",
+          "y2"
+        ],
+        "readWrites": []
+      }
+    ],
+    "triggers": [
+      {
+        "type": "trigger",
+        "name": "chooseLineType",
+        "reads": [
+          "x1",
+          "x2",
+          "y1",
+          "y2"
+        ],
+        "writes": [
+          "distance"
+        ],
+        "readWrites": []
+      },
+      {
+        "type": "trigger",
+        "name": "printResult",
+        "reads": [
+          "distance"
+        ],
+        "writes": [],
+        "readWrites": []
+      }
+    ],
+    "callGraph": {
+      "reportShortcut": [
+        "chooseLineType"
+      ]
+    },
+    "varReads": {
+      "x1": [
+        "chooseLineType"
+      ],
+      "x2": [
+        "chooseLineType"
+      ],
+      "y1": [
+        "chooseLineType"
+      ],
+      "y2": [
+        "chooseLineType"
+      ],
+      "distance": [
+        "printResult"
+      ]
+    },
+    "varWrites": {
+      "x1": "calculateDistance",
+      "x2": "calculateDistance",
+      "y1": "calculateDistance",
+      "y2": "calculateDistance",
+      "distance": "chooseLineType"
+    }
+  }
+]

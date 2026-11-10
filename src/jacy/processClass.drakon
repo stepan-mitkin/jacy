@@ -1,0 +1,221 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "cls\nmodels",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "5",
+            "content": "Build context"
+        },
+        "5": {
+            "type": "action",
+            "one": "7",
+            "content": "body = cls.body.body"
+        },
+        "7": {
+            "type": "action",
+            "one": "22",
+            "content": "name = cls.id.name"
+        },
+        "22": {
+            "type": "action",
+            "one": "25",
+            "content": "context = {\n    name: name,\n    functions: {},\n    procs: {},\n    varReads: {},\n    varWrites: {},\n    methods: [],\n    triggers: [],\n    variables: {},\n    methodNames: {},\n    callGraph: {}\n}"
+        },
+        "24": {
+            "type": "branch",
+            "one": "27",
+            "branchId": 6,
+            "content": "Create model"
+        },
+        "25": {
+            "type": "branch",
+            "one": "29",
+            "branchId": 2,
+            "content": "Find functions and variables"
+        },
+        "26": {
+            "type": "action",
+            "one": "1",
+            "two": "",
+            "content": "models.push(model)"
+        },
+        "27": {
+            "type": "action",
+            "one": "26",
+            "two": "",
+            "content": "model = {\n    name: name,\n    variables: context.variables,\n    methods: context.methods,\n    triggers: context.triggers,\n    callGraph: context.callGraph,\n    varReads: context.varReads,\n    varWrites: context.varWrites\n}"
+        },
+        "28": {
+            "type": "loopend",
+            "one": "31",
+            "two": "",
+            "content": ""
+        },
+        "29": {
+            "type": "loopbegin",
+            "one": "30",
+            "two": "",
+            "content": "node; body"
+        },
+        "30": {
+            "type": "action",
+            "one": "28",
+            "two": "",
+            "content": "scanMember(context, node)"
+        },
+        "31": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "42",
+            "content": "Find methods and triggers"
+        },
+        "32": {
+            "type": "loopend",
+            "one": "41",
+            "content": ""
+        },
+        "33": {
+            "type": "loopbegin",
+            "one": "34",
+            "content": "funName, fun; context.functions"
+        },
+        "34": {
+            "type": "question",
+            "one": "35",
+            "two": "39",
+            "flag1": 1,
+            "content": "funName in context.methodNames"
+        },
+        "35": {
+            "type": "action",
+            "one": "46",
+            "content": "proc = scanReadWrites(\n    context,\n    \"method\",\n    fun\n)"
+        },
+        "36": {
+            "type": "action",
+            "one": "32",
+            "content": "context.procs[funName] = proc"
+        },
+        "37": {
+            "type": "action",
+            "one": "47",
+            "content": "proc = scanReadWrites(\n    context,\n    \"trigger\",\n    fun\n)"
+        },
+        "39": {
+            "type": "question",
+            "one": "37",
+            "two": "43",
+            "flag1": 0,
+            "content": "funName in context.callGraph"
+        },
+        "41": {
+            "type": "branch",
+            "branchId": 4,
+            "one": "45",
+            "content": "Build proc call graph"
+        },
+        "42": {
+            "type": "action",
+            "one": "33",
+            "content": "procs = {}"
+        },
+        "43": {
+            "type": "action",
+            "one": "36",
+            "content": "proc = scanReadWrites(\n    context,\n    \"private\",\n    fun\n)"
+        },
+        "44": {
+            "type": "loopend",
+            "one": "51",
+            "content": ""
+        },
+        "45": {
+            "type": "loopbegin",
+            "one": "49",
+            "content": "funName, procedure; context.procs"
+        },
+        "46": {
+            "type": "action",
+            "one": "36",
+            "content": "context.methods.push(proc)"
+        },
+        "47": {
+            "type": "action",
+            "one": "36",
+            "content": "context.triggers.push(proc)"
+        },
+        "49": {
+            "type": "action",
+            "one": "44",
+            "content": "addToProcGraph(context, procedure)"
+        },
+        "50": {
+            "type": "loopend",
+            "one": "55",
+            "content": ""
+        },
+        "51": {
+            "type": "loopbegin",
+            "one": "52",
+            "content": "variable, _; context.variables"
+        },
+        "52": {
+            "type": "question",
+            "one": "54",
+            "two": "53",
+            "flag1": 1,
+            "content": "context.varWrites[variable]"
+        },
+        "53": {
+            "type": "action",
+            "one": "54",
+            "content": "throw new Error(\n    \"No function writes to the shared variable: \"\n    + context.name + \".\" + variable\n)"
+        },
+        "54": {
+            "type": "action",
+            "one": "50",
+            "content": "checkForCycles(context, variable, [])"
+        },
+        "55": {
+            "type": "branch",
+            "branchId": 5,
+            "one": "56",
+            "content": "Modify AST"
+        },
+        "56": {
+            "type": "action",
+            "one": "59",
+            "content": "declareTriggers(context, body)"
+        },
+        "59": {
+            "type": "loopbegin",
+            "one": "61",
+            "content": "funName, procedure; context.procs"
+        },
+        "60": {
+            "type": "loopend",
+            "one": "24",
+            "content": ""
+        },
+        "61": {
+            "type": "question",
+            "one": "62",
+            "two": "60",
+            "flag1": 0,
+            "content": "procedure.type === \"private\""
+        },
+        "62": {
+            "type": "action",
+            "one": "60",
+            "content": "rewriteProcedure(context, procedure)"
+        }
+    }
+}

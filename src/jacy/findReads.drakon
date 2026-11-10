@@ -1,0 +1,221 @@
+{
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "content": "Main",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "question",
+            "content": "node.type === \"Identifier\"",
+            "flag1": 1,
+            "one": "53",
+            "two": "1"
+        },
+        "4": {
+            "type": "select",
+            "content": "operation",
+            "one": "9"
+        },
+        "5": {
+            "type": "case",
+            "content": "\"readwrite\"",
+            "one": "6",
+            "two": "55"
+        },
+        "6": {
+            "type": "action",
+            "content": "astContext.readWrites[name] = true",
+            "one": "1"
+        },
+        "7": {
+            "type": "case",
+            "content": "\"write\"",
+            "one": "8",
+            "two": "5"
+        },
+        "8": {
+            "type": "action",
+            "content": "astContext.writes[name] = true",
+            "one": "1"
+        },
+        "9": {
+            "type": "case",
+            "content": "\"read\"",
+            "one": "10",
+            "two": "7"
+        },
+        "10": {
+            "type": "action",
+            "content": "astContext.reads[name] = true",
+            "one": "1"
+        },
+        "11": {
+            "type": "select",
+            "content": "parent.type",
+            "one": "47"
+        },
+        "12": {
+            "type": "case",
+            "one": "62"
+        },
+        "22": {
+            "type": "case",
+            "content": "\"NewExpression\"",
+            "one": "4",
+            "two": "12"
+        },
+        "25": {
+            "type": "case",
+            "content": "\"BinaryExpression\"",
+            "one": "4",
+            "two": "70"
+        },
+        "32": {
+            "type": "case",
+            "content": "\"MemberExpression\"",
+            "one": "63",
+            "two": "25"
+        },
+        "42": {
+            "type": "case",
+            "content": "\"VariableDeclarator\"",
+            "one": "43",
+            "two": "32"
+        },
+        "43": {
+            "type": "question",
+            "content": "property === \"id\"",
+            "flag1": 1,
+            "one": "44",
+            "two": "4"
+        },
+        "44": {
+            "type": "action",
+            "content": "operation = \"none\"",
+            "one": "4"
+        },
+        "45": {
+            "type": "case",
+            "content": "\"UpdateExpression\"",
+            "one": "46",
+            "two": "42"
+        },
+        "46": {
+            "type": "action",
+            "content": "operation = \"readwrite\"",
+            "one": "4"
+        },
+        "47": {
+            "type": "case",
+            "content": "\"AssignmentExpression\"",
+            "one": "48",
+            "two": "45"
+        },
+        "48": {
+            "type": "question",
+            "content": "property === \"left\"",
+            "flag1": 1,
+            "one": "49",
+            "two": "4"
+        },
+        "49": {
+            "type": "question",
+            "content": "parent.operator === \"=\"",
+            "flag1": 1,
+            "one": "50",
+            "two": "51"
+        },
+        "50": {
+            "type": "action",
+            "content": "operation = \"write\"",
+            "one": "4"
+        },
+        "51": {
+            "type": "action",
+            "content": "operation = \"readwrite\"",
+            "one": "4"
+        },
+        "52": {
+            "type": "action",
+            "content": "operation = \"read\"",
+            "one": "11"
+        },
+        "53": {
+            "type": "action",
+            "content": "name = node.name",
+            "one": "68"
+        },
+        "55": {
+            "one": "1",
+            "type": "case",
+            "two": null
+        },
+        "62": {
+            "type": "action",
+            "one": "4",
+            "content": "operation = \"none\""
+        },
+        "63": {
+            "type": "question",
+            "flag1": 1,
+            "one": "4",
+            "two": "64",
+            "content": "property === \"object\""
+        },
+        "64": {
+            "type": "question",
+            "flag1": 1,
+            "one": "65",
+            "two": "67",
+            "content": "property === \"property\""
+        },
+        "65": {
+            "type": "question",
+            "flag1": 1,
+            "one": "4",
+            "two": "67",
+            "content": "parent.computed"
+        },
+        "67": {
+            "type": "action",
+            "one": "4",
+            "two": "",
+            "content": "operation = \"none\""
+        },
+        "68": {
+            "type": "question",
+            "one": "52",
+            "two": "1",
+            "flag1": 1,
+            "content": "name in astContext.variables"
+        },
+        "69": {
+            "type": "case",
+            "one": "4",
+            "two": "22",
+            "content": "\"CallExpression\""
+        },
+        "70": {
+            "one": "4",
+            "type": "case",
+            "two": "69",
+            "content": "\"UnaryExpression\""
+        }
+    },
+    "type": "drakon",
+    "name": "findReads",
+    "params": "parent\nproperty\nnode\nastContext",
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    }
+}

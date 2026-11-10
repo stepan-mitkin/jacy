@@ -1,0 +1,37 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context\ntype\nfun",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "5",
+            "content": "astContext = {\n    variables: context.variables,\n    myWrites: {},\n    reads: {},\n    writes: {},\n    readWrites: {}\n}"
+        },
+        "4": {
+            "type": "action",
+            "one": "1",
+            "content": "return {\n    type: type,\n    name: fun.id.name,\n    reads: getSortedKeys(\n        astContext.reads\n    ),\n    writes: getSortedKeys(\n        astContext.writes\n    ),\n    readWrites: getSortedKeys(\n        astContext.readWrites\n    )\n}"
+        },
+        "5": {
+            "type": "action",
+            "one": "4",
+            "content": "traverseAst(\n    {},\n    \"\",\n    fun,\n    findReads,\n    astContext\n)"
+        }
+    }
+}

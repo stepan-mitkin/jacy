@@ -1,0 +1,154 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context\nprocedure",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "11",
+            "content": "Perform checks"
+        },
+        "4": {
+            "type": "case",
+            "one": "8",
+            "content": "\"private\""
+        },
+        "5": {
+            "type": "case",
+            "one": "19",
+            "two": "4",
+            "content": "\"trigger\""
+        },
+        "6": {
+            "type": "case",
+            "one": "15",
+            "two": "5",
+            "content": "\"method\""
+        },
+        "7": {
+            "type": "select",
+            "one": "6",
+            "content": "procedure.type"
+        },
+        "8": {
+            "type": "question",
+            "one": "9",
+            "two": "10",
+            "flag1": 0,
+            "content": "procedure.reads.length > 0"
+        },
+        "9": {
+            "type": "question",
+            "one": "19",
+            "two": "10",
+            "flag1": 0,
+            "content": "procedure.writes.length > 0"
+        },
+        "10": {
+            "type": "action",
+            "one": "19",
+            "content": "throw new Error(\n    \"A private function cannot read and write to shared variables: \"\n    + procName\n)"
+        },
+        "11": {
+            "type": "action",
+            "one": "12",
+            "content": "procName = context.name + \".\" + procedure\n.name"
+        },
+        "12": {
+            "type": "question",
+            "one": "7",
+            "two": "14",
+            "flag1": 0,
+            "content": "procedure.readWrites.length > 0"
+        },
+        "14": {
+            "type": "action",
+            "one": "7",
+            "two": "",
+            "content": "throw new Error(\n    \"Simultaneous reading and writing to a shared variable is not allowed: \"\n    + procName\n)"
+        },
+        "15": {
+            "type": "question",
+            "one": "19",
+            "two": "17",
+            "flag1": 0,
+            "content": "procedure.reads.length > 0"
+        },
+        "17": {
+            "type": "action",
+            "one": "19",
+            "two": "",
+            "content": "throw new Error(\n    \"A method cannot read from shared variables: \"\n    + procName\n)"
+        },
+        "18": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "19": {
+            "type": "branch",
+            "one": "22",
+            "branchId": 2,
+            "content": "Add to graph"
+        },
+        "21": {
+            "type": "loopend",
+            "one": "25",
+            "content": ""
+        },
+        "22": {
+            "type": "loopbegin",
+            "one": "23",
+            "content": "variable; procedure.reads"
+        },
+        "23": {
+            "type": "action",
+            "one": "21",
+            "content": "multiAdd(\n    context.varReads,\n    variable,\n    procedure.name\n)"
+        },
+        "24": {
+            "type": "loopend",
+            "one": "18",
+            "content": ""
+        },
+        "25": {
+            "type": "loopbegin",
+            "one": "29",
+            "content": "variable; procedure.writes"
+        },
+        "26": {
+            "type": "question",
+            "one": "27",
+            "two": "28",
+            "flag1": 0,
+            "content": "existing"
+        },
+        "27": {
+            "type": "action",
+            "one": "24",
+            "content": "context.varWrites[variable] = procedure.name"
+        },
+        "28": {
+            "type": "action",
+            "one": "24",
+            "content": "throw new Error(\n    \"Only one function can write to a shared variable: \"\n    + procName + \" and \" + context.name +\n    \".\" + existing\n)"
+        },
+        "29": {
+            "type": "action",
+            "one": "26",
+            "content": "existing = context.varWrites[variable]"
+        }
+    }
+}

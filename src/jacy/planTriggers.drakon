@@ -1,0 +1,103 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "8",
+            "content": "copy = []"
+        },
+        "4": {
+            "type": "question",
+            "one": "18",
+            "two": "5",
+            "flag1": 1,
+            "content": "node.type === \"BlockStatement\""
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "return undefined"
+        },
+        "6": {
+            "type": "action",
+            "one": "3",
+            "content": "body = node.body"
+        },
+        "7": {
+            "type": "loopend",
+            "one": "20",
+            "content": ""
+        },
+        "8": {
+            "type": "loopbegin",
+            "one": "10",
+            "content": "statement; body"
+        },
+        "10": {
+            "type": "action",
+            "one": "16",
+            "content": "variable = detectWrite(statement)"
+        },
+        "12": {
+            "type": "action",
+            "one": "13",
+            "content": "addToPlan(context, variable, copy)"
+        },
+        "13": {
+            "type": "action",
+            "one": "14",
+            "content": "statement2 = rewriteAst(\n    node,\n    \"body\",\n    statement,\n    planTriggers,\n    context\n)"
+        },
+        "14": {
+            "type": "action",
+            "one": "7",
+            "content": "copy.push(statement2)"
+        },
+        "15": {
+            "type": "action",
+            "one": "1",
+            "content": "return node"
+        },
+        "16": {
+            "type": "question",
+            "one": "17",
+            "two": "13",
+            "flag1": 1,
+            "content": "variable"
+        },
+        "17": {
+            "type": "question",
+            "one": "12",
+            "two": "13",
+            "flag1": 1,
+            "content": "variable in context.variables"
+        },
+        "18": {
+            "type": "action",
+            "one": "6",
+            "content": "context = {\n    plan: clone(astContext.plan),\n    variables: astContext.variables,\n    varReads: astContext.varReads\n}"
+        },
+        "20": {
+            "type": "action",
+            "one": "15",
+            "content": "node.body = copy"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "parent\nproperty\nnode\nastContext"
+}

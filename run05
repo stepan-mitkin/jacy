@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+node src/main.js sketches/example05.js --output sketches/example05processed.js --model sketches/example05processed.json

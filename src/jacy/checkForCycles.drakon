@@ -1,0 +1,81 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context\nvariable\nstack",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "14",
+            "content": "stack.push(variable)"
+        },
+        "4": {
+            "type": "question",
+            "one": "3",
+            "two": "5",
+            "flag1": 1,
+            "content": "stack.indexOf(variable) === -1"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "throw new Error(\n    \"Dependency loop in shared variables: \"\n    + context.name + \".\" + variable\n)"
+        },
+        "7": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "8": {
+            "type": "loopbegin",
+            "one": "9",
+            "content": "reader; readers"
+        },
+        "9": {
+            "type": "action",
+            "one": "12",
+            "content": "proc = context.procs[reader]"
+        },
+        "11": {
+            "type": "loopend",
+            "one": "7",
+            "content": ""
+        },
+        "12": {
+            "type": "loopbegin",
+            "one": "13",
+            "content": "outputVariable; proc.writes"
+        },
+        "13": {
+            "type": "action",
+            "one": "11",
+            "content": "checkForCycles(\n    context,\n    outputVariable,\n    stack.slice()\n)"
+        },
+        "14": {
+            "type": "action",
+            "one": "15",
+            "content": "readers = context.varReads[variable]"
+        },
+        "15": {
+            "type": "question",
+            "one": "8",
+            "two": "1",
+            "flag1": 1,
+            "content": "readers"
+        }
+    }
+}

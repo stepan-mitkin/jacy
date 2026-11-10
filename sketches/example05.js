@@ -17,9 +17,11 @@ function Distance() {
     function chooseLineType() {
         var dx, dy;
         if (y1 === y2) {
+            reportShortcut(true);
             distance = Math.abs(x1 - x2);
         } else {
             if (x1 === x2) {
+                reportShortcut(false);
                 distance = Math.abs(y1 - y2);
             } else {
                 dx = x2 - x1;
@@ -33,6 +35,13 @@ function Distance() {
             console.log('The distance is long');
         } else {
             console.log('The distance is short');
+        }
+    }
+    function reportShortcut(horizontal) {
+        if (horizontal) {
+            console.log('Horizontal shortcut');
+        } else {
+            console.log('Vertical shortcut');
         }
     }
     self.calculateDistance = calculateDistance;
