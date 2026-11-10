@@ -1,0 +1,107 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\nmethod",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "3",
+            "content": "Triggers"
+        },
+        "3": {
+            "type": "action",
+            "one": "5",
+            "content": "dependants = {}"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "12",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "variable; method.writes"
+        },
+        "6": {
+            "type": "action",
+            "one": "7",
+            "content": "reads = context.varReads[variable]"
+        },
+        "7": {
+            "type": "question",
+            "one": "9",
+            "two": "4",
+            "flag1": 1,
+            "content": "reads"
+        },
+        "8": {
+            "type": "loopend",
+            "one": "4",
+            "content": ""
+        },
+        "9": {
+            "type": "loopbegin",
+            "one": "10",
+            "content": "procName; reads"
+        },
+        "10": {
+            "type": "action",
+            "one": "8",
+            "content": "dependants[procName] = true"
+        },
+        "12": {
+            "type": "action",
+            "one": "14",
+            "content": "method.dependants = getSortedKeys(\n    dependants\n)"
+        },
+        "13": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "14": {
+            "type": "branch",
+            "one": "19",
+            "branchId": 2,
+            "content": "Dependencies"
+        },
+        "15": {
+            "type": "loopend",
+            "one": "21",
+            "content": ""
+        },
+        "16": {
+            "type": "loopbegin",
+            "one": "17",
+            "content": "variable; method.reads"
+        },
+        "17": {
+            "type": "action",
+            "one": "18",
+            "content": "producer = context.varWrites[variable]"
+        },
+        "18": {
+            "type": "action",
+            "one": "15",
+            "content": "dependencies[producer] = true"
+        },
+        "19": {
+            "type": "action",
+            "one": "16",
+            "content": "dependencies = {}"
+        },
+        "21": {
+            "type": "action",
+            "one": "13",
+            "content": "method.dependencies = getSortedKeys(\n    dependencies\n)"
+        }
+    }
+}

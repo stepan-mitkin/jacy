@@ -12,7 +12,7 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "console.log(\"The distance is long\")"
+            "content": "console.log(\n    \"The distance is long\",\n    x1,\n    x2\n)"
         },
         "4": {
             "type": "question",
@@ -24,7 +24,7 @@
         "5": {
             "type": "action",
             "one": "1",
-            "content": "console.log(\"The distance is short\")"
+            "content": "console.log(\n    \"The distance is short\",\n    y1,\n    y2\n)"
         }
     }
 }

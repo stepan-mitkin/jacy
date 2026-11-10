@@ -32,7 +32,7 @@
         "24": {
             "type": "branch",
             "one": "27",
-            "branchId": 6,
+            "branchId": 7,
             "content": "Create model"
         },
         "25": {
@@ -159,7 +159,7 @@
         },
         "50": {
             "type": "loopend",
-            "one": "55",
+            "one": "63",
             "content": ""
         },
         "51": {
@@ -186,7 +186,7 @@
         },
         "55": {
             "type": "branch",
-            "branchId": 5,
+            "branchId": 6,
             "one": "56",
             "content": "Modify AST"
         },
@@ -216,6 +216,32 @@
             "type": "action",
             "one": "60",
             "content": "rewriteProcedure(context, procedure)"
+        },
+        "63": {
+            "type": "branch",
+            "branchId": 5,
+            "one": "65",
+            "content": "Sort triggers"
+        },
+        "64": {
+            "type": "loopend",
+            "one": "67",
+            "content": ""
+        },
+        "65": {
+            "type": "loopbegin",
+            "one": "66",
+            "content": "funName, procedure; context.procs"
+        },
+        "66": {
+            "type": "action",
+            "one": "64",
+            "content": "findTriggers(context, procedure)"
+        },
+        "67": {
+            "type": "action",
+            "one": "55",
+            "content": "sortTriggers(context)"
         }
     }
 }

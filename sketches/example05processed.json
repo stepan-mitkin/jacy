@@ -12,6 +12,11 @@
       {
         "type": "method",
         "name": "calculateDistance",
+        "dependants": [
+          "chooseLineType",
+          "printResult"
+        ],
+        "dependencies": [],
         "reads": [],
         "writes": [
           "x1",
@@ -19,13 +24,20 @@
           "y1",
           "y2"
         ],
-        "readWrites": []
+        "readWrites": [],
+        "rank": 1
       }
     ],
     "triggers": [
       {
         "type": "trigger",
         "name": "chooseLineType",
+        "dependants": [
+          "printResult"
+        ],
+        "dependencies": [
+          "calculateDistance"
+        ],
         "reads": [
           "x1",
           "x2",
@@ -35,16 +47,27 @@
         "writes": [
           "distance"
         ],
-        "readWrites": []
+        "readWrites": [],
+        "rank": 2
       },
       {
         "type": "trigger",
         "name": "printResult",
+        "dependants": [],
+        "dependencies": [
+          "calculateDistance",
+          "chooseLineType"
+        ],
         "reads": [
-          "distance"
+          "distance",
+          "x1",
+          "x2",
+          "y1",
+          "y2"
         ],
         "writes": [],
-        "readWrites": []
+        "readWrites": [],
+        "rank": 3
       }
     ],
     "callGraph": {
@@ -54,16 +77,20 @@
     },
     "varReads": {
       "x1": [
-        "chooseLineType"
+        "chooseLineType",
+        "printResult"
       ],
       "x2": [
-        "chooseLineType"
+        "chooseLineType",
+        "printResult"
       ],
       "y1": [
-        "chooseLineType"
+        "chooseLineType",
+        "printResult"
       ],
       "y2": [
-        "chooseLineType"
+        "chooseLineType",
+        "printResult"
       ],
       "distance": [
         "printResult"

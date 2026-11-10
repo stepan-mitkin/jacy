@@ -175,6 +175,13 @@ function createMember(objName, propName) {
         }
     };
 }
+function createNumber(number) {
+    return {
+        type: 'Literal',
+        value: number,
+        raw: number.toString()
+    };
+}
 function createObjectExpression() {
     return {
         type: 'ObjectExpression',
@@ -200,11 +207,15 @@ function createString(literal) {
     };
 }
 function declareTriggers(context, body) {
-    var decl, name, prop, trigger, triggers;
+    var decl, name, proc, prop, trigger, triggers;
     triggers = createObjectExpression();
     for (trigger of context.triggers) {
         name = trigger.name;
-        prop = createProperty(name, createIdentifier(name));
+        proc = context.procs[name];
+        trigger = createObjectExpression();
+        trigger.properties.push(createProperty('fun', createIdentifier(name)));
+        trigger.properties.push(createProperty('rank', createNumber(proc.rank)));
+        prop = createProperty(name, trigger);
         triggers.properties.push(prop);
     }
     decl = createDeclaration('_triggers_', triggers);
@@ -278,7 +289,29 @@ function findReads(parent, property, node, astContext) {
         }
     }
 }
+function findTriggers(context, method) {
+    var dependants, dependencies, procName, producer, reads, variable;
+    dependants = {};
+    for (variable of method.writes) {
+        reads = context.varReads[variable];
+        if (reads) {
+            for (procName of reads) {
+                dependants[procName] = true;
+            }
+        }
+    }
+    method.dependants = getSortedKeys(dependants);
+    dependencies = {};
+    for (variable of method.reads) {
+        producer = context.varWrites[variable];
+        dependencies[producer] = true;
+    }
+    method.dependencies = getSortedKeys(dependencies);
+}
 function findWrittenVariable(statement) {
+}
+function getDeps(node) {
+    return node.dependencies;
 }
 function getSortedKeys(obj) {
     return Object.keys(obj).toSorted();
@@ -323,7 +356,7 @@ function planTriggers(parent, property, node, astContext) {
     }
 }
 function processClass(cls, models) {
-    var _, _collection_11, _collection_2, _collection_5, _collection_8, body, context, fun, funName, model, name, node, proc, procedure, procs, variable;
+    var _, _collection_11, _collection_14, _collection_2, _collection_5, _collection_8, body, context, fun, funName, model, name, node, proc, procedure, procs, variable;
     body = cls.body.body;
     name = cls.id.name;
     context = {
@@ -371,6 +404,12 @@ function processClass(cls, models) {
         }
         checkForCycles(context, variable, []);
     }
+    _collection_14 = context.procs;
+    for (funName in _collection_14) {
+        procedure = _collection_14[funName];
+        findTriggers(context, procedure);
+    }
+    sortTriggers(context);
     declareTriggers(context, body);
     _collection_11 = context.procs;
     for (funName in _collection_11) {
@@ -478,10 +517,55 @@ function scanReadWrites(context, type, fun) {
     return {
         type: type,
         name: fun.id.name,
+        dependants: [],
+        dependencies: [],
         reads: getSortedKeys(astContext.reads),
         writes: getSortedKeys(astContext.writes),
         readWrites: getSortedKeys(astContext.readWrites)
     };
+}
+function sortTriggers(context) {
+    var name, proc, rank, sorted;
+    sorted = topologicalSort(context.procs, getDeps);
+    rank = 1;
+    for (name of sorted) {
+        proc = context.procs[name];
+        proc.rank = rank;
+        rank++;
+    }
+}
+function topoVisit(context, id, node) {
+    var dependencies, dependency, depid;
+    if (id in context.visiting) {
+        throw new Error('Circular dependency: ' + id);
+    } else {
+        if (!(id in context.visited)) {
+            context.visiting[id] = true;
+            dependencies = context.getDependencies(node);
+            for (depid of dependencies) {
+                dependency = context.graph[depid];
+                topoVisit(context, depid, dependency);
+            }
+            delete context.visiting[id];
+            context.visited[id] = true;
+            context.result.push(id);
+        }
+    }
+}
+function topologicalSort(graph, getDependencies) {
+    var context, id, node;
+    context = {
+        visiting: {},
+        visited: {},
+        result: [],
+        graph: graph,
+        getDependencies: getDependencies
+    };
+    for (id in graph) {
+        node = graph[id];
+        topoVisit(context, id, node);
+    }
+    return context.result;
 }
 function traverseAst(parent, property, node, visitor, data) {
     var item, name, stop, value;

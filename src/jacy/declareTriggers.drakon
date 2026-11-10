@@ -41,7 +41,7 @@
         "8": {
             "type": "action",
             "one": "9",
-            "content": "prop = createProperty(\n    name,\n    createIdentifier(name)\n)"
+            "content": "prop = createProperty(name, trigger)"
         },
         "9": {
             "type": "action",
@@ -50,8 +50,28 @@
         },
         "10": {
             "type": "action",
-            "one": "8",
+            "one": "14",
             "content": "name = trigger.name"
+        },
+        "11": {
+            "type": "action",
+            "one": "12",
+            "content": "trigger = createObjectExpression()"
+        },
+        "12": {
+            "type": "action",
+            "one": "13",
+            "content": "trigger.properties.push(\n    createProperty(\n        \"fun\",\n        createIdentifier(name)\n    )\n)"
+        },
+        "13": {
+            "type": "action",
+            "one": "8",
+            "content": "trigger.properties.push(\n    createProperty(\n        \"rank\",\n        createNumber(proc.rank)\n    )\n)"
+        },
+        "14": {
+            "type": "action",
+            "one": "11",
+            "content": "proc = context.procs[name]"
         }
     }
 }

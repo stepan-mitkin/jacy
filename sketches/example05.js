@@ -32,9 +32,9 @@ function Distance() {
     }
     function printResult() {
         if (distance > 100) {
-            console.log('The distance is long');
+            console.log('The distance is long', x1, x2);
         } else {
-            console.log('The distance is short');
+            console.log('The distance is short', y1, y2);
         }
     }
     function reportShortcut(horizontal) {
