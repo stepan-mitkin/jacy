@@ -1,0 +1,52 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\nprocedure\nwrites",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "8",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "variable; procedure.writes"
+        },
+        "6": {
+            "type": "action",
+            "one": "4",
+            "content": "writes[variable] = true"
+        },
+        "7": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "8": {
+            "type": "loopbegin",
+            "one": "9",
+            "content": "name; procedure.dependants"
+        },
+        "9": {
+            "type": "action",
+            "one": "10",
+            "content": "dependant = context.procs[name]"
+        },
+        "10": {
+            "type": "action",
+            "one": "7",
+            "content": "collectWrites(context, dependant, writes)"
+        }
+    }
+}

@@ -1,6 +1,21 @@
 function jacy() {
 var unit = {};
 
+function addReadiness(procedure, body) {
+    var check, ifStatement, test, variable;
+    test = undefined;
+    for (variable of procedure.reads) {
+        check = createEqualToUndefined(variable);
+        if (test) {
+            test = createOr(test, check);
+        } else {
+            test = check;
+        }
+    }
+    ifStatement = createIf(test);
+    ifStatement.consequent.body.push(createReturn(createBool(true)));
+    body.unshift(ifStatement);
+}
 function addToPlan(context, variable, output) {
     var ass, left, procName, reads, right;
     reads = context.varReads[variable];
@@ -102,11 +117,34 @@ function checkVarAccess(property, node, astContext) {
         }
     }
 }
+function clearVariables(context, procedure, body) {
+    var clearVar, variable, writeList, writes;
+    writes = {};
+    collectWrites(context, procedure, writes);
+    for (variable of procedure.writes) {
+        delete writes[variable];
+    }
+    writeList = getSortedKeys(writes);
+    for (variable of writeList) {
+        clearVar = createAssignment(createIdentifier(variable), createIdentifier('undefined'));
+        body.unshift(clearVar);
+    }
+}
 function clone(obj) {
     var copy;
     copy = {};
     Object.assign(copy, obj);
     return copy;
+}
+function collectWrites(context, procedure, writes) {
+    var dependant, name, variable;
+    for (variable of procedure.writes) {
+        writes[variable] = true;
+    }
+    for (name of procedure.dependants) {
+        dependant = context.procs[name];
+        collectWrites(context, dependant, writes);
+    }
 }
 function createAssignment(left, right) {
     return {
@@ -117,6 +155,14 @@ function createAssignment(left, right) {
             left: left,
             right: right
         }
+    };
+}
+function createBinary(operator, left, right) {
+    return {
+        type: 'BinaryExpression',
+        operator: operator,
+        left: left,
+        right: right
     };
 }
 function createBool(value) {
@@ -147,10 +193,24 @@ function createDeclaration(variable, value) {
             }]
     };
 }
+function createEqualToUndefined(name) {
+    return createBinary('===', createIdentifier(name), createIdentifier('undefined'));
+}
 function createIdentifier(name) {
     return {
         'type': 'Identifier',
         'name': name
+    };
+}
+function createIf(test) {
+    return {
+        type: 'IfStatement',
+        test: test,
+        consequent: {
+            type: 'BlockStatement',
+            body: []
+        },
+        alternate: null
     };
 }
 function createIndexed(obj, key) {
@@ -188,6 +248,9 @@ function createObjectExpression() {
         properties: []
     };
 }
+function createOr(left, right) {
+    return createBinary('||', left, right);
+}
 function createProperty(name, value) {
     return {
         type: 'Property',
@@ -197,6 +260,12 @@ function createProperty(name, value) {
         kind: 'init',
         method: false,
         shorthand: false
+    };
+}
+function createReturn(argument) {
+    return {
+        type: 'ReturnStatement',
+        argument: argument
     };
 }
 function createString(literal) {
@@ -459,9 +528,13 @@ function rewriteAst(parent, property, node, visitor, data) {
 }
 function rewriteProcedure(context, procedure) {
     var _selectValue_2, astContext, body, fun;
-    if (!(procedure.writes.length === 0)) {
-        fun = context.functions[procedure.name];
-        body = fun.body.body;
+    fun = context.functions[procedure.name];
+    body = fun.body.body;
+    if (procedure.type === 'trigger') {
+        addReadiness(procedure, body);
+    }
+    if (procedure.writes.length === 0) {
+    } else {
         _selectValue_2 = procedure.type;
         if (_selectValue_2 === 'method') {
             body.unshift(createDeclaration('_plan_', createObjectExpression()));
@@ -481,6 +554,9 @@ function rewriteProcedure(context, procedure) {
             variables: context.variables
         };
         fun.body = rewriteAst({}, '', fun.body, planTriggers, astContext);
+        if (procedure.type === 'method') {
+            clearVariables(context, procedure, fun.body.body);
+        }
     }
 }
 function scanMember(context, node) {

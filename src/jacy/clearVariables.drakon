@@ -1,0 +1,84 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\nprocedure\nbody",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "3",
+            "content": "Find variables written by triggers"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "writes = {}"
+        },
+        "4": {
+            "type": "action",
+            "one": "6",
+            "content": "collectWrites(context, procedure, writes)"
+        },
+        "5": {
+            "type": "loopend",
+            "one": "9",
+            "content": ""
+        },
+        "6": {
+            "type": "loopbegin",
+            "one": "8",
+            "content": "variable; procedure.writes"
+        },
+        "8": {
+            "type": "action",
+            "one": "5",
+            "content": "delete writes[variable]"
+        },
+        "9": {
+            "type": "action",
+            "one": "15",
+            "content": "writeList = getSortedKeys(writes)"
+        },
+        "14": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "15": {
+            "type": "branch",
+            "one": "17",
+            "branchId": 2,
+            "content": "Clear filtered variables"
+        },
+        "16": {
+            "type": "loopend",
+            "one": "14",
+            "two": "",
+            "content": ""
+        },
+        "17": {
+            "type": "loopbegin",
+            "one": "18",
+            "two": "",
+            "content": "variable; writeList"
+        },
+        "18": {
+            "type": "action",
+            "one": "19",
+            "two": "",
+            "content": "clearVar = createAssignment(\n    createIdentifier(variable),\n    createIdentifier(\"undefined\")\n)"
+        },
+        "19": {
+            "type": "action",
+            "one": "16",
+            "two": "",
+            "content": "body.unshift(clearVar)"
+        }
+    }
+}

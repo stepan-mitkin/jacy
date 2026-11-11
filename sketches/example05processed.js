@@ -18,6 +18,7 @@ function example05(runtime) {
         var y2;
         var distance;
         function calculateDistance(point1, point2) {
+            distance = undefined;
             var _plan_ = {};
             _plan_['chooseLineType'] = true;
             _plan_['printResult'] = true;
@@ -28,6 +29,9 @@ function example05(runtime) {
             runtime.runTriggers(_plan_, _triggers_);
         }
         function chooseLineType(_plan_) {
+            if (x1 === undefined || x2 === undefined || y1 === undefined || y2 === undefined) {
+                return true;
+            }
             var dx, dy;
             if (y1 === y2) {
                 reportShortcut(true);
@@ -47,6 +51,9 @@ function example05(runtime) {
             }
         }
         function printResult() {
+            if (distance === undefined || x1 === undefined || x2 === undefined || y1 === undefined || y2 === undefined) {
+                return true;
+            }
             if (distance > 100) {
                 console.log('The distance is long', x1, x2);
             } else {

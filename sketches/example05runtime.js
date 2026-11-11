@@ -7,12 +7,14 @@ function TriggerRuntime05() {
             plan = {}
             for (var methodName of methods) {
                 if (!(methodName in ran)) {
-                    ran[methodName] = true
                     var method = triggers[methodName].fun
-                    method(plan)
+                    var tooEarly = method(plan)
+                    if (!tooEarly) {
+                        ran[methodName] = false
+                    }
                 }
             }
-            methods = methods = getSortedTriggers(plan, triggers)
+            methods = getSortedTriggers(plan, triggers)
         }
     }
 

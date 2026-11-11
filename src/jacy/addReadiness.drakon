@@ -1,0 +1,69 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "procedure\nbody",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "7"
+        },
+        "3": {
+            "type": "action",
+            "one": "11",
+            "content": "ifStatement = createIf(test)"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "3",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "variable; procedure.reads"
+        },
+        "6": {
+            "type": "action",
+            "one": "8",
+            "content": "check = createEqualToUndefined(variable)"
+        },
+        "7": {
+            "type": "action",
+            "one": "5",
+            "content": "test = undefined"
+        },
+        "8": {
+            "type": "question",
+            "one": "9",
+            "two": "10",
+            "flag1": 1,
+            "content": "test"
+        },
+        "9": {
+            "type": "action",
+            "one": "4",
+            "content": "test = createOr(test, check)"
+        },
+        "10": {
+            "type": "action",
+            "one": "4",
+            "content": "test = check"
+        },
+        "11": {
+            "type": "action",
+            "one": "12",
+            "content": "ifStatement.consequent.body.push(\n    createReturn(createBool(true))\n)"
+        },
+        "12": {
+            "type": "action",
+            "one": "1",
+            "content": "body.unshift(ifStatement)"
+        }
+    }
+}
