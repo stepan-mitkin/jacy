@@ -12,6 +12,7 @@
       {
         "type": "method",
         "name": "calculateDistance",
+        "isAsync": false,
         "dependants": [
           "chooseLineType",
           "printResult"
@@ -32,6 +33,7 @@
       {
         "type": "trigger",
         "name": "chooseLineType",
+        "isAsync": false,
         "dependants": [
           "printResult"
         ],
@@ -53,6 +55,7 @@
       {
         "type": "trigger",
         "name": "printResult",
+        "isAsync": false,
         "dependants": [],
         "dependencies": [
           "calculateDistance",

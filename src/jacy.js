@@ -157,6 +157,15 @@ function createAssignment(left, right) {
         }
     };
 }
+function createAsyncPCall(argument) {
+    return {
+        type: 'ExpressionStatement',
+        expression: {
+            type: 'AwaitExpression',
+            argument: argument
+        }
+    };
+}
 function createBinary(operator, left, right) {
     return {
         type: 'BinaryExpression',
@@ -175,11 +184,14 @@ function createBool(value) {
 function createCall(callee, argNames) {
     return {
         type: 'ExpressionStatement',
-        expression: {
-            type: 'CallExpression',
-            callee: callee,
-            arguments: argNames.map(createIdentifier)
-        }
+        expression: createCallExp(callee, argNames)
+    };
+}
+function createCallExp(callee, argNames) {
+    return {
+        type: 'CallExpression',
+        callee: callee,
+        arguments: argNames.map(createIdentifier)
     };
 }
 function createDeclaration(variable, value) {
@@ -307,6 +319,20 @@ function detectWrite(statement) {
     } else {
         return undefined;
     }
+}
+function findAsyncTriggers(procs, procedure) {
+    var as, dep, name;
+    for (name of procedure.dependants) {
+        dep = procs[name];
+        if (dep.isAsync) {
+            return true;
+        }
+        as = findAsyncTriggers(procs, dep);
+        if (as) {
+            return true;
+        }
+    }
+    return false;
 }
 function findReads(parent, property, node, astContext) {
     var _selectValue_2, name, operation;
@@ -527,7 +553,7 @@ function rewriteAst(parent, property, node, visitor, data) {
     }
 }
 function rewriteProcedure(context, procedure) {
-    var _selectValue_2, astContext, body, fun;
+    var _selectValue_2, astContext, body, fun, isAsync;
     fun = context.functions[procedure.name];
     body = fun.body.body;
     if (procedure.type === 'trigger') {
@@ -538,10 +564,6 @@ function rewriteProcedure(context, procedure) {
         _selectValue_2 = procedure.type;
         if (_selectValue_2 === 'method') {
             body.unshift(createDeclaration('_plan_', createObjectExpression()));
-            body.push(createCall(createMember('runtime', 'runTriggers'), [
-                '_plan_',
-                '_triggers_'
-            ]));
         } else {
             if (!(_selectValue_2 === 'trigger')) {
                 throw new Error('Unexpected case value: ' + _selectValue_2);
@@ -554,8 +576,23 @@ function rewriteProcedure(context, procedure) {
             variables: context.variables
         };
         fun.body = rewriteAst({}, '', fun.body, planTriggers, astContext);
+        body = fun.body.body;
         if (procedure.type === 'method') {
-            clearVariables(context, procedure, fun.body.body);
+            clearVariables(context, procedure, body);
+            isAsync = findAsyncTriggers(context.procs, procedure);
+            if (isAsync) {
+                fun['async'] = true;
+                body.push(createAsyncPCall(createCallExp(createMember('runtime', 'runTriggersAsync'), [
+                    '_plan_',
+                    '_triggers_'
+                ])));
+            } else {
+                body.push(createCall(createMember('runtime', 'runTriggers'), [
+                    '_plan_',
+                    '_triggers_'
+                ]));
+            }
+        } else {
         }
     }
 }
@@ -593,6 +630,7 @@ function scanReadWrites(context, type, fun) {
     return {
         type: type,
         name: fun.id.name,
+        isAsync: fun['async'] || false,
         dependants: [],
         dependencies: [],
         reads: getSortedKeys(astContext.reads),

@@ -12,7 +12,7 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "return {\n    type: \"ExpressionStatement\",\n    expression: {\n        type: \"CallExpression\",\n        callee: callee,\n        arguments : argNames.map(\n            createIdentifier\n        )\n    }\n}"
+            "content": "return {\n    type: \"ExpressionStatement\",\n    expression: createCallExp(\n        callee,\n        argNames\n    )\n}"
         }
     },
     "keywords": {

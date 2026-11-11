@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Distance",
+    "variables": {
+      "x1": true,
+      "y1": true,
+      "x2": true,
+      "y2": true,
+      "distance": true
+    },
+    "methods": [
+      {
+        "type": "method",
+        "name": "calculateDistance",
+        "isAsync": false,
+        "dependants": [
+          "chooseLineType",
+          "printResult"
+        ],
+        "dependencies": [],
+        "reads": [],
+        "writes": [
+          "x1",
+          "x2",
+          "y1",
+          "y2"
+        ],
+        "readWrites": [],
+        "rank": 1
+      }
+    ],
+    "triggers": [
+      {
+        "type": "trigger",
+        "name": "chooseLineType",
+        "isAsync": false,
+        "dependants": [
+          "printResult"
+        ],
+        "dependencies": [
+          "calculateDistance"
+        ],
+        "reads": [
+          "x1",
+          "x2",
+          "y1",
+          "y2"
+        ],
+        "writes": [
+          "distance"
+        ],
+        "readWrites": [],
+        "rank": 2
+      },
+      {
+        "type": "trigger",
+        "name": "printResult",
+        "isAsync": true,
+        "dependants": [],
+        "dependencies": [
+          "calculateDistance",
+          "chooseLineType"
+        ],
+        "reads": [
+          "distance",
+          "x1",
+          "x2",
+          "y1",
+          "y2"
+        ],
+        "writes": [],
+        "readWrites": [],
+        "rank": 4
+      }
+    ],
+    "callGraph": {
+      "reportShortcut": [
+        "chooseLineType"
+      ],
+      "setTimeout": [
+        "pause"
+      ],
+      "pause": [
+        "printResult"
+      ]
+    },
+    "varReads": {
+      "x1": [
+        "chooseLineType",
+        "printResult"
+      ],
+      "x2": [
+        "chooseLineType",
+        "printResult"
+      ],
+      "y1": [
+        "chooseLineType",
+        "printResult"
+      ],
+      "y2": [
+        "chooseLineType",
+        "printResult"
+      ],
+      "distance": [
+        "printResult"
+      ]
+    },
+    "varWrites": {
+      "x1": "calculateDistance",
+      "x2": "calculateDistance",
+      "y1": "calculateDistance",
+      "y2": "calculateDistance",
+      "distance": "chooseLineType"
+    }
+  }
+]

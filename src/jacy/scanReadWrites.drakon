@@ -26,7 +26,7 @@
         "4": {
             "type": "action",
             "one": "1",
-            "content": "return {\n    type: type,\n    name: fun.id.name,\n    dependants: [],\n    dependencies: [],\n    reads: getSortedKeys(\n        astContext.reads\n    ),\n    writes: getSortedKeys(\n        astContext.writes\n    ),\n    readWrites: getSortedKeys(\n        astContext.readWrites\n    )\n}"
+            "content": "return {\n    type: type,\n    name: fun.id.name,\n    isAsync: fun[\"async\"] || false,\n    dependants: [],\n    dependencies: [],\n    reads: getSortedKeys(\n        astContext.reads\n    ),\n    writes: getSortedKeys(\n        astContext.writes\n    ),\n    readWrites: getSortedKeys(\n        astContext.readWrites\n    )\n}"
         },
         "5": {
             "type": "action",

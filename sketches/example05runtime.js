@@ -26,18 +26,21 @@ function TriggerRuntime05() {
 
     async function runTriggersAsync(plan, triggers) {
         var methods = getSortedTriggers(plan, triggers)
+        var ran = {}
         while (methods.length > 0) {
             plan = {}
             for (var methodName of methods) {
-                var method = triggers[methodName]
-                var result = method(plan)
-                if (result && typeof result.then === "function") {
-                    await result
+                if (!(methodName in ran)) {
+                    var method = triggers[methodName].fun
+                    var tooEarly = await method(plan)
+                    if (!tooEarly) {
+                        ran[methodName] = false
+                    }
                 }
             }
-            methods = methods = getSortedTriggers(plan, triggers)
+            methods = getSortedTriggers(plan, triggers)
         }
-    }    
+    } 
 
     unit.runTriggers = runTriggers
     unit.runTriggersAsync = runTriggersAsync

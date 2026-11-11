@@ -1,0 +1,71 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "procs\nprocedure",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "13",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "name; procedure.dependants"
+        },
+        "6": {
+            "type": "action",
+            "one": "7",
+            "content": "dep = procs[name]"
+        },
+        "7": {
+            "type": "question",
+            "one": "10",
+            "two": "9",
+            "flag1": 0,
+            "content": "dep.isAsync"
+        },
+        "9": {
+            "type": "action",
+            "one": "10",
+            "content": "return true"
+        },
+        "10": {
+            "type": "action",
+            "one": "11",
+            "content": "as = findAsyncTriggers(procs, dep)"
+        },
+        "11": {
+            "type": "question",
+            "one": "4",
+            "two": "12",
+            "flag1": 0,
+            "content": "as"
+        },
+        "12": {
+            "type": "action",
+            "one": "4",
+            "content": "return true"
+        },
+        "13": {
+            "type": "action",
+            "one": "1",
+            "content": "return false"
+        }
+    }
+}

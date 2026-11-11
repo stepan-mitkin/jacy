@@ -48,7 +48,7 @@
         "23": {
             "type": "branch",
             "one": "1",
-            "branchId": 5,
+            "branchId": 6,
             "content": "Exit"
         },
         "24": {
@@ -61,7 +61,7 @@
             "type": "branch",
             "branchId": 2,
             "one": "32",
-            "content": "Prepare"
+            "content": "Prepare plan"
         },
         "26": {
             "type": "branch",
@@ -71,7 +71,7 @@
         },
         "27": {
             "type": "action",
-            "one": "26",
+            "one": "45",
             "two": "",
             "content": "fun.body = rewriteAst(\n    {},\n    \"\",\n    fun.body,\n    planTriggers,\n    astContext\n)"
         },
@@ -80,12 +80,6 @@
             "one": "27",
             "two": "",
             "content": "astContext = {\n    plan: {},\n    varReads: context.varReads,\n    variables: context.variables\n}"
-        },
-        "29": {
-            "type": "action",
-            "one": "24",
-            "two": "",
-            "content": "body.push(\n    createCall(\n        createMember(\n            \"runtime\",\n            \"runTriggers\"\n        ),\n        [\"_plan_\", \"_triggers_\"]\n    )\n)"
         },
         "30": {
             "type": "case",
@@ -107,7 +101,7 @@
         },
         "33": {
             "type": "action",
-            "one": "29",
+            "one": "24",
             "two": "",
             "content": "body.unshift(\n    createDeclaration(\n        \"_plan_\",\n        createObjectExpression()\n    )\n)"
         },
@@ -126,9 +120,51 @@
         },
         "38": {
             "type": "action",
+            "one": "41",
+            "two": "",
+            "content": "clearVariables(context, procedure, body)"
+        },
+        "41": {
+            "type": "branch",
+            "branchId": 5,
+            "one": "43",
+            "content": "Run triggers"
+        },
+        "43": {
+            "type": "action",
+            "one": "44",
+            "two": "",
+            "content": "isAsync = findAsyncTriggers(\n    context.procs,\n    procedure\n)"
+        },
+        "44": {
+            "type": "question",
+            "one": "46",
+            "two": "47",
+            "flag1": 0,
+            "content": "isAsync"
+        },
+        "45": {
+            "type": "action",
+            "one": "26",
+            "two": "",
+            "content": "body = fun.body.body"
+        },
+        "46": {
+            "type": "action",
             "one": "23",
             "two": "",
-            "content": "clearVariables(\n    context,\n    procedure,\n    fun.body.body\n)"
+            "content": "body.push(\n    createCall(\n        createMember(\n            \"runtime\",\n            \"runTriggers\"\n        ),\n        [\"_plan_\", \"_triggers_\"]\n    )\n)"
+        },
+        "47": {
+            "type": "action",
+            "one": "48",
+            "content": "fun[\"async\"] = true"
+        },
+        "48": {
+            "type": "action",
+            "one": "23",
+            "two": "",
+            "content": "body.push(\n    createAsyncPCall(\n        createCallExp(\n            createMember(\n                \"runtime\",\n                \"runTriggersAsync\"\n            ),\n            [\"_plan_\", \"_triggers_\"]\n        )\n    )\n)"
         }
     }
 }
