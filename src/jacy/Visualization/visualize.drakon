@@ -1,0 +1,37 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "model",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "diagram = {\n    \"items\": {\n        \"1\": {\n            \"type\": \"rounded\",\n            \"left\": -50,\n            \"top\": -50,\n            \"width\": 200,\n            \"height\": 50,\n            \"aux\": 10,\n            \"zIndex\": 0,\n            \"content\": \"<p>Some function</p>\"\n        },\n        \"2\": {\n            \"type\": \"rectangle\",\n            \"left\": -335,\n            \"top\": -50,\n            \"width\": 200,\n            \"height\": 50,\n            \"zIndex\": 1,\n            \"content\": \"<p>inputVarOne</p>\"\n        },\n        \"3\": {\n            \"type\": \"rectangle\",\n            \"left\": -335,\n            \"top\": 30,\n            \"width\": 200,\n            \"height\": 50,\n            \"zIndex\": 2,\n            \"content\": \"<p>inputVarTwo</p>\"\n        },\n        \"4\": {\n            \"type\": \"rectangle\",\n            \"left\": -335,\n            \"top\": 105,\n            \"width\": 200,\n            \"height\": 50,\n            \"zIndex\": 3,\n            \"content\": \"<p>inputVarThree</p>\"\n        },\n        \"5\": {\n            \"type\": \"rectangle\",\n            \"left\": 225,\n            \"top\": -50,\n            \"width\": 200,\n            \"height\": 50,\n            \"zIndex\": 4,\n            \"content\": \"<p>outputVarOne</p>\"\n        }\n    },\n    \"type\": \"free\",\n    \"name\": \"JacyExample\"\n}"
+        },
+        "4": {
+            "type": "action",
+            "one": "5",
+            "content": "secondPart = {\n    \"6\": {\n        \"type\": \"rectangle\",\n        \"left\": 225,\n        \"top\": 30,\n        \"width\": 200,\n        \"height\": 50,\n        \"zIndex\": 5,\n        \"content\": \"<p>outputVarTwo</p>\"\n    },\n    \"7\": {\n        \"type\": \"connection\",\n        \"begin\": \"2\",\n        \"end\": \"1\",\n        \"role\": \"horizontal\",\n        \"style\": \"{\\\"headStyle\\\":\\\"arrow\\\"}\",\n        \"zIndex\": 6\n    },\n    \"8\": {\n        \"type\": \"connection\",\n        \"begin\": \"3\",\n        \"end\": \"1\",\n        \"role\": \"horizontal\",\n        \"style\": \"{\\\"headStyle\\\":\\\"arrow\\\"}\",\n        \"zIndex\": 6\n    },\n    \"9\": {\n        \"type\": \"connection\",\n        \"begin\": \"4\",\n        \"end\": \"1\",\n        \"role\": \"horizontal\",\n        \"style\": \"{\\\"headStyle\\\":\\\"arrow\\\"}\",\n        \"zIndex\": 6\n    },\n    \"10\": {\n        \"type\": \"connection\",\n        \"begin\": \"1\",\n        \"end\": \"5\",\n        \"role\": \"horizontal\",\n        \"style\": \"{\\\"headStyle\\\":\\\"arrow\\\"}\",\n        \"zIndex\": 6\n    },\n    \"11\": {\n        \"type\": \"connection\",\n        \"begin\": \"1\",\n        \"end\": \"6\",\n        \"role\": \"horizontal\",\n        \"style\": \"{\\\"headStyle\\\":\\\"arrow\\\"}\",\n        \"zIndex\": 6\n    },\n    \"12\": {\n        \"type\": \"text\",\n        \"left\": -335,\n        \"top\": -110,\n        \"width\": 330,\n        \"height\": 30,\n        \"content\": \"<p>JacyExample</p>\",\n        \"zIndex\": 6,\n        \"style\": \"{\\\"font\\\":\\\"bold 20px Arimo\\\",\\\"iconBack\\\":\\\"\\\",\\\"color\\\":\\\"\\\",\\\"iconBorder\\\":\\\"\\\",\\\"internalLine\\\":\\\"\\\",\\\"lineHeight\\\":\\\"\\\",\\\"textAlign\\\":\\\"\\\",\\\"borderStyle\\\":\\\"\\\",\\\"shadowOffsetX\\\":0,\\\"shadowOffsetY\\\":0,\\\"shadowColor\\\":\\\"\\\",\\\"shadowBlur\\\":0,\\\"borderWidth\\\":\\\"\\\"}\"\n    }\n}"
+        },
+        "5": {
+            "type": "action",
+            "one": "6",
+            "content": "Object.assign(diagram.items, secondPart)"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "return diagram"
+        }
+    }
+}

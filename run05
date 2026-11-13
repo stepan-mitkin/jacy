@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-node src/main.js sketches/example05.js --output sketches/example05processed.js --model sketches/example05processed.json
+node src/main.js sketches/example05.js --output sketches/example05processed.js --model sketches/example05processed.json --diagrams sketches/diagrams
 node src/main.js sketches/example05as.js --output sketches/example05asprocessed.js --model sketches/example05asprocessed.json

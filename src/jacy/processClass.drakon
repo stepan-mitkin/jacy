@@ -1,8 +1,13 @@
 {
     "keywords": {
-        "function": true
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
     },
-    "params": "cls\nmodels",
+    "params": "cls",
     "type": "drakon",
     "items": {
         "1": {
@@ -45,7 +50,7 @@
             "type": "action",
             "one": "1",
             "two": "",
-            "content": "models.push(model)"
+            "content": "return model"
         },
         "27": {
             "type": "action",

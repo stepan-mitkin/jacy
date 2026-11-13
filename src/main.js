@@ -14,7 +14,7 @@ function getArguments() {
     for (let i = 0; i < args.length; i++) {
         const arg = args[i];
 
-        if (arg === "--output" || arg === "--model") {
+        if (arg === "--output" || arg === "--model" || arg === "--diagrams") {
             if (!args[i + 1] || args[i + 1].startsWith("--")) {
                 console.error(`Missing value for ${arg}`);
                 process.exit(1);
@@ -32,7 +32,7 @@ function getArguments() {
     }
 
     if (!result.input) {
-        console.log("Usage: node main.js <input.js> [--output output.js] [--model model.json]");
+        console.log("Usage: node main.js <input.js> [--output output.js] [--model model.json] [--diagrams some_folder]");
         process.exit(1);
     }
 
@@ -58,6 +58,15 @@ async function main() {
         await fs.writeFile(args.model, models, 'utf8');
     } else {
         console.log(models);
+    }
+    if (args.diagrams) {
+        const diagramsDir = args.diagrams;
+        await fs.mkdir(diagramsDir, { recursive: true });
+        for (var diagram of jcbuild.diagrams) {
+            const diagramPath = `${diagramsDir}/${diagram.name}.free`;
+            var content = JSON.stringify(diagram, null, 4);
+            await fs.writeFile(diagramPath, content, 'utf8');
+        }
     }
 }
 

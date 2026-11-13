@@ -6,8 +6,9 @@
         },
         "2": {
             "type": "branch",
-            "branchId": 0,
-            "one": "11"
+            "branchId": 1,
+            "one": "11",
+            "content": "Find classes"
         },
         "3": {
             "type": "action",
@@ -21,28 +22,8 @@
         },
         "5": {
             "type": "action",
-            "one": "9",
+            "one": "17",
             "content": "classes = nsfun.body.body.filter(\n    isFunction\n)"
-        },
-        "7": {
-            "type": "loopend",
-            "one": "10",
-            "content": ""
-        },
-        "8": {
-            "type": "loopbegin",
-            "one": "13",
-            "content": "cls; classes"
-        },
-        "9": {
-            "type": "action",
-            "one": "8",
-            "content": "models = []"
-        },
-        "10": {
-            "type": "action",
-            "one": "1",
-            "content": "return {\n    ast: astCopy,\n    models: models\n}"
         },
         "11": {
             "type": "action",
@@ -54,10 +35,58 @@
             "one": "3",
             "content": "astCopy = JSON.parse(astjs)"
         },
-        "13": {
+        "16": {
+            "type": "branch",
+            "one": "18",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "17": {
+            "type": "branch",
+            "one": "21",
+            "branchId": 2,
+            "content": "Process classes"
+        },
+        "18": {
             "type": "action",
-            "one": "7",
-            "content": "processClass(cls, models)"
+            "one": "1",
+            "content": "return {\n    ast: astCopy,\n    models: models,\n    diagrams: diagrams\n}"
+        },
+        "19": {
+            "type": "loopend",
+            "one": "16",
+            "two": "",
+            "content": ""
+        },
+        "20": {
+            "type": "loopbegin",
+            "one": "22",
+            "two": "",
+            "content": "cls; classes"
+        },
+        "21": {
+            "type": "action",
+            "one": "20",
+            "two": "",
+            "content": "models = []\ndiagrams = []"
+        },
+        "22": {
+            "type": "action",
+            "one": "23",
+            "two": "",
+            "content": "model = processClass(cls, models)"
+        },
+        "23": {
+            "type": "action",
+            "one": "24",
+            "two": "",
+            "content": "diagram = visualize(model)"
+        },
+        "24": {
+            "type": "action",
+            "one": "19",
+            "two": "",
+            "content": "models.push(model)\ndiagrams.push(diagram)"
         }
     },
     "keywords": {

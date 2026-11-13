@@ -65,19 +65,24 @@ function addToProcGraph(context, procedure) {
     }
 }
 function build(ast) {
-    var astCopy, astjs, classes, cls, models, nsfun;
+    var astCopy, astjs, classes, cls, diagram, diagrams, model, models, nsfun;
     astjs = JSON.stringify(ast);
     astCopy = JSON.parse(astjs);
     nsfun = astCopy.body[0];
     nsfun.params.push(createIdentifier('runtime'));
     classes = nsfun.body.body.filter(isFunction);
     models = [];
+    diagrams = [];
     for (cls of classes) {
-        processClass(cls, models);
+        model = processClass(cls, models);
+        diagram = visualize(model);
+        models.push(model);
+        diagrams.push(diagram);
     }
     return {
         ast: astCopy,
-        models: models
+        models: models,
+        diagrams: diagrams
     };
 }
 function buildCallGraph(parent, property, node, astContext) {
@@ -450,7 +455,7 @@ function planTriggers(parent, property, node, astContext) {
         return undefined;
     }
 }
-function processClass(cls, models) {
+function processClass(cls) {
     var _, _collection_11, _collection_14, _collection_2, _collection_5, _collection_8, body, context, fun, funName, model, name, node, proc, procedure, procs, variable;
     body = cls.body.body;
     name = cls.id.name;
@@ -522,7 +527,7 @@ function processClass(cls, models) {
         varReads: context.varReads,
         varWrites: context.varWrites
     };
-    models.push(model);
+    return model;
 }
 function rewriteAst(parent, property, node, visitor, data) {
     var array2, copy, item, name, value, value2;
@@ -726,6 +731,124 @@ function tryGetVariableName(statement) {
     } else {
         return undefined;
     }
+}
+function visualize(model) {
+    var diagram, secondPart;
+    diagram = {
+        'items': {
+            '1': {
+                'type': 'rounded',
+                'left': -50,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'aux': 10,
+                'zIndex': 0,
+                'content': '<p>Some function</p>'
+            },
+            '2': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'zIndex': 1,
+                'content': '<p>inputVarOne</p>'
+            },
+            '3': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': 30,
+                'width': 200,
+                'height': 50,
+                'zIndex': 2,
+                'content': '<p>inputVarTwo</p>'
+            },
+            '4': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': 105,
+                'width': 200,
+                'height': 50,
+                'zIndex': 3,
+                'content': '<p>inputVarThree</p>'
+            },
+            '5': {
+                'type': 'rectangle',
+                'left': 225,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'zIndex': 4,
+                'content': '<p>outputVarOne</p>'
+            }
+        },
+        'type': 'free',
+        'name': 'JacyExample'
+    };
+    secondPart = {
+        '6': {
+            'type': 'rectangle',
+            'left': 225,
+            'top': 30,
+            'width': 200,
+            'height': 50,
+            'zIndex': 5,
+            'content': '<p>outputVarTwo</p>'
+        },
+        '7': {
+            'type': 'connection',
+            'begin': '2',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '8': {
+            'type': 'connection',
+            'begin': '3',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '9': {
+            'type': 'connection',
+            'begin': '4',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '10': {
+            'type': 'connection',
+            'begin': '1',
+            'end': '5',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '11': {
+            'type': 'connection',
+            'begin': '1',
+            'end': '6',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '12': {
+            'type': 'text',
+            'left': -335,
+            'top': -110,
+            'width': 330,
+            'height': 30,
+            'content': '<p>JacyExample</p>',
+            'zIndex': 6,
+            'style': '{"font":"bold 20px Arimo","iconBack":"","color":"","iconBorder":"","internalLine":"","lineHeight":"","textAlign":"","borderStyle":"","shadowOffsetX":0,"shadowOffsetY":0,"shadowColor":"","shadowBlur":0,"borderWidth":""}'
+        }
+    };
+    Object.assign(diagram.items, secondPart);
+    return diagram;
 }
 unit.build = build;
 return unit;
