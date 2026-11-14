@@ -72,21 +72,15 @@
         },
         "22": {
             "type": "action",
-            "one": "23",
-            "two": "",
-            "content": "model = processClass(cls, models)"
-        },
-        "23": {
-            "type": "action",
             "one": "24",
             "two": "",
-            "content": "diagram = visualize(model)"
+            "content": "processed = processClass(cls, models)"
         },
         "24": {
             "type": "action",
             "one": "19",
             "two": "",
-            "content": "models.push(model)\ndiagrams.push(diagram)"
+            "content": "models.push(processed.model)\ndiagrams.push(processed.diagram)"
         }
     },
     "keywords": {

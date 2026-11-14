@@ -1,0 +1,79 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "16"
+        },
+        "4": {
+            "type": "action",
+            "one": "1",
+            "two": "",
+            "content": "return diagram"
+        },
+        "6": {
+            "type": "loopend",
+            "one": "4",
+            "two": "",
+            "content": ""
+        },
+        "7": {
+            "type": "loopbegin",
+            "one": "9",
+            "two": "",
+            "content": "methodName; methods"
+        },
+        "8": {
+            "type": "action",
+            "one": "13",
+            "two": "",
+            "content": "diagram = {\n    name: context.name,\n    type: \"free\",\n    items: {}\n}"
+        },
+        "9": {
+            "type": "action",
+            "one": "10",
+            "two": "",
+            "content": "method = context.procs[methodName]"
+        },
+        "10": {
+            "type": "action",
+            "one": "6",
+            "two": "",
+            "content": "renderMethod(\n    context,\n    diagram.items,\n    method\n)"
+        },
+        "11": {
+            "type": "action",
+            "one": "7",
+            "two": "",
+            "content": "addHeader(diagram.items, diagram.name)"
+        },
+        "13": {
+            "type": "action",
+            "one": "14",
+            "content": "methods = context.methods.map(\n    method => method.name\n)"
+        },
+        "14": {
+            "type": "action",
+            "one": "11",
+            "content": "methods.sort()"
+        },
+        "16": {
+            "type": "action",
+            "one": "8",
+            "content": "nextId = 1\nabsBottom = 0"
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context\nmethodName",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "5",
+            "content": "traverseFunctions(\n    context,\n    methodName,\n    funNames\n)"
+        },
+        "4": {
+            "type": "action",
+            "one": "3",
+            "content": "funNames = {}"
+        },
+        "5": {
+            "type": "action",
+            "one": "7",
+            "content": "functions = Object.keys(funNames)"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "return functions"
+        },
+        "7": {
+            "type": "action",
+            "one": "6",
+            "content": "functions.sort(\n    (left, right) => compareByRank(\n        context,\n        left,\n        right\n    )\n)"
+        }
+    }
+}

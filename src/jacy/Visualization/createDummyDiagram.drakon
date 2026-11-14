@@ -1,8 +1,6 @@
 {
-    "keywords": {
-        "function": true
-    },
-    "params": "model",
+    "keywords": {},
+    "params": "",
     "type": "drakon",
     "items": {
         "1": {

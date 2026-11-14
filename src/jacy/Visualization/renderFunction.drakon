@@ -1,0 +1,144 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "context\nitems\nname\nleft\ntop",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "5",
+            "content": "Put function items"
+        },
+        "5": {
+            "type": "action",
+            "one": "11",
+            "content": "proc = context.procs[name]"
+        },
+        "11": {
+            "type": "action",
+            "one": "13",
+            "content": "funId = addRectItem(\n    items,\n    \"rounded\",\n    left,\n    top,\n    calculateItemWidth(name),\n    iconHeight,\n    name\n)"
+        },
+        "13": {
+            "type": "action",
+            "one": "15",
+            "content": "funItem = items[funId]\nfunItem.aux = 10"
+        },
+        "14": {
+            "type": "branch",
+            "one": "36",
+            "branchId": 4,
+            "content": "Exit"
+        },
+        "15": {
+            "type": "branch",
+            "one": "17",
+            "branchId": 2,
+            "content": "Dependencies"
+        },
+        "16": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "20",
+            "content": "Dependants"
+        },
+        "17": {
+            "type": "question",
+            "one": "28",
+            "two": "35",
+            "flag1": 0,
+            "content": "proc.reads.length === 0"
+        },
+        "20": {
+            "type": "question",
+            "one": "34",
+            "two": "38",
+            "flag1": 0,
+            "content": "proc.writes.length === 0"
+        },
+        "21": {
+            "type": "loopend",
+            "one": "24",
+            "content": ""
+        },
+        "22": {
+            "type": "loopbegin",
+            "one": "23",
+            "content": "depId; depInfo.ids"
+        },
+        "23": {
+            "type": "action",
+            "one": "21",
+            "content": "addArrow(items, depId, funId)"
+        },
+        "24": {
+            "type": "action",
+            "one": "35",
+            "content": "funItem.left = depInfo.right + horizontalSpace\n* 2"
+        },
+        "28": {
+            "type": "action",
+            "one": "22",
+            "content": "depInfo = renderDependencies(\n    items,\n    proc.reads,\n    left,\n    top\n)"
+        },
+        "29": {
+            "type": "loopend",
+            "one": "37",
+            "two": "",
+            "content": ""
+        },
+        "30": {
+            "type": "loopbegin",
+            "one": "31",
+            "two": "",
+            "content": "depId; depInfo.ids"
+        },
+        "31": {
+            "type": "action",
+            "one": "29",
+            "two": "",
+            "content": "addArrow(items, funId, depId)"
+        },
+        "32": {
+            "type": "action",
+            "one": "30",
+            "two": "",
+            "content": "depInfo = renderDependencies(\n    items,\n    proc.writes,\n    left2,\n    top\n)"
+        },
+        "34": {
+            "type": "action",
+            "one": "32",
+            "content": "left2 = funRight + horizontalSpace * 2"
+        },
+        "35": {
+            "type": "action",
+            "one": "16",
+            "content": "funRight = funItem.left + funItem.width"
+        },
+        "36": {
+            "type": "action",
+            "one": "1",
+            "content": "return right"
+        },
+        "37": {
+            "type": "action",
+            "one": "14",
+            "content": "right = depInfo.right"
+        },
+        "38": {
+            "type": "action",
+            "one": "14",
+            "content": "right = funRight"
+        }
+    }
+}

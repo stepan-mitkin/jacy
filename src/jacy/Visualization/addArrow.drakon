@@ -1,0 +1,51 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "items\nbegin\nend",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "5"
+        },
+        "4": {
+            "type": "action",
+            "one": "6",
+            "two": "",
+            "content": "item = {\n    \"type\": \"connection\",\n    begin: begin,\n    end: end,\n    role: \"horizontal\",\n    style: JSON.stringify(style),\n    zIndex: nextId\n}"
+        },
+        "5": {
+            "type": "action",
+            "one": "7",
+            "two": "",
+            "content": "id = makeId()"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "two": "",
+            "content": "items[id] = item"
+        },
+        "7": {
+            "type": "action",
+            "one": "8",
+            "two": "",
+            "content": "id = makeId()"
+        },
+        "8": {
+            "type": "action",
+            "one": "4",
+            "content": "style = {\"headStyle\": \"arrow\"}"
+        }
+    }
+}

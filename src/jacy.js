@@ -1,6 +1,34 @@
 function jacy() {
 var unit = {};
 
+var absBottom, nextId;
+const iconHeight = 50;
+const verticalSpace = 20;
+const horizontalSpace = 30;
+nextId = 1;
+absBottom = 0;
+function addArrow(items, begin, end) {
+    var id, item, style;
+    id = makeId();
+    id = makeId();
+    style = { 'headStyle': 'arrow' };
+    item = {
+        'type': 'connection',
+        begin: begin,
+        end: end,
+        role: 'horizontal',
+        style: JSON.stringify(style),
+        zIndex: nextId
+    };
+    items[id] = item;
+}
+function addHeader(items, text) {
+    var header, headerId, style;
+    headerId = addRectItem(items, 'text', 0, 0, calculateItemWidth(text), iconHeight, text);
+    style = { font: 'bold 20px Arimo' };
+    header = items[headerId];
+    header.style = JSON.stringify(style);
+}
 function addReadiness(procedure, body) {
     var check, ifStatement, test, variable;
     test = undefined;
@@ -15,6 +43,23 @@ function addReadiness(procedure, body) {
     ifStatement = createIf(test);
     ifStatement.consequent.body.push(createReturn(createBool(true)));
     body.unshift(ifStatement);
+}
+function addRectItem(items, type, left, top, width, height, text) {
+    var bottom, id, item;
+    id = makeId();
+    item = {
+        type: type,
+        left: left,
+        top: top,
+        width: width,
+        height: height,
+        content: text,
+        zIndex: nextId
+    };
+    items[id] = item;
+    bottom = top + height;
+    absBottom = Math.max(absBottom, bottom);
+    return id;
 }
 function addToPlan(context, variable, output) {
     var ass, left, procName, reads, right;
@@ -65,7 +110,7 @@ function addToProcGraph(context, procedure) {
     }
 }
 function build(ast) {
-    var astCopy, astjs, classes, cls, diagram, diagrams, model, models, nsfun;
+    var astCopy, astjs, classes, cls, diagrams, models, nsfun, processed;
     astjs = JSON.stringify(ast);
     astCopy = JSON.parse(astjs);
     nsfun = astCopy.body[0];
@@ -74,10 +119,9 @@ function build(ast) {
     models = [];
     diagrams = [];
     for (cls of classes) {
-        model = processClass(cls, models);
-        diagram = visualize(model);
-        models.push(model);
-        diagrams.push(diagram);
+        processed = processClass(cls, models);
+        models.push(processed.model);
+        diagrams.push(processed.diagram);
     }
     return {
         ast: astCopy,
@@ -89,6 +133,30 @@ function buildCallGraph(parent, property, node, astContext) {
     if (node.type === 'CallExpression' && node.callee.type === 'Identifier') {
         multiAdd(astContext.callGraph, node.callee.name, astContext.name);
     }
+}
+function buildClassDiagram(context) {
+    var diagram, method, methodName, methods;
+    nextId = 1;
+    absBottom = 0;
+    diagram = {
+        name: context.name,
+        type: 'free',
+        items: {}
+    };
+    methods = context.methods.map(method => method.name);
+    methods.sort();
+    addHeader(diagram.items, diagram.name);
+    for (methodName of methods) {
+        method = context.procs[methodName];
+        renderMethod(context, diagram.items, method);
+    }
+    return diagram;
+}
+function calculateItemWidth(text) {
+    var length, width;
+    length = text.length;
+    width = length * 10 + 20;
+    return Math.ceil(width / 10) * 10;
 }
 function checkForCycles(context, variable, stack) {
     var outputVariable, proc, reader, readers;
@@ -151,6 +219,12 @@ function collectWrites(context, procedure, writes) {
         collectWrites(context, dependant, writes);
     }
 }
+function compareByRank(context, leftName, rightName) {
+    var left, right;
+    left = context.procs[leftName];
+    right = context.procs[rightName];
+    return left.rank - right.rank;
+}
 function createAssignment(left, right) {
     return {
         type: 'ExpressionStatement',
@@ -209,6 +283,124 @@ function createDeclaration(variable, value) {
                 init: value
             }]
     };
+}
+function createDummyDiagram() {
+    var diagram, secondPart;
+    diagram = {
+        'items': {
+            '1': {
+                'type': 'rounded',
+                'left': -50,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'aux': 10,
+                'zIndex': 0,
+                'content': '<p>Some function</p>'
+            },
+            '2': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'zIndex': 1,
+                'content': '<p>inputVarOne</p>'
+            },
+            '3': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': 30,
+                'width': 200,
+                'height': 50,
+                'zIndex': 2,
+                'content': '<p>inputVarTwo</p>'
+            },
+            '4': {
+                'type': 'rectangle',
+                'left': -335,
+                'top': 105,
+                'width': 200,
+                'height': 50,
+                'zIndex': 3,
+                'content': '<p>inputVarThree</p>'
+            },
+            '5': {
+                'type': 'rectangle',
+                'left': 225,
+                'top': -50,
+                'width': 200,
+                'height': 50,
+                'zIndex': 4,
+                'content': '<p>outputVarOne</p>'
+            }
+        },
+        'type': 'free',
+        'name': 'JacyExample'
+    };
+    secondPart = {
+        '6': {
+            'type': 'rectangle',
+            'left': 225,
+            'top': 30,
+            'width': 200,
+            'height': 50,
+            'zIndex': 5,
+            'content': '<p>outputVarTwo</p>'
+        },
+        '7': {
+            'type': 'connection',
+            'begin': '2',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '8': {
+            'type': 'connection',
+            'begin': '3',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '9': {
+            'type': 'connection',
+            'begin': '4',
+            'end': '1',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '10': {
+            'type': 'connection',
+            'begin': '1',
+            'end': '5',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '11': {
+            'type': 'connection',
+            'begin': '1',
+            'end': '6',
+            'role': 'horizontal',
+            'style': '{"headStyle":"arrow"}',
+            'zIndex': 6
+        },
+        '12': {
+            'type': 'text',
+            'left': -335,
+            'top': -110,
+            'width': 330,
+            'height': 30,
+            'content': '<p>JacyExample</p>',
+            'zIndex': 6,
+            'style': '{"font":"bold 20px Arimo","iconBack":"","color":"","iconBorder":"","internalLine":"","lineHeight":"","textAlign":"","borderStyle":"","shadowOffsetX":0,"shadowOffsetY":0,"shadowColor":"","shadowBlur":0,"borderWidth":""}'
+        }
+    };
+    Object.assign(diagram.items, secondPart);
+    return diagram;
 }
 function createEqualToUndefined(name) {
     return createBinary('===', createIdentifier(name), createIdentifier('undefined'));
@@ -413,11 +605,25 @@ function findWrittenVariable(statement) {
 function getDeps(node) {
     return node.dependencies;
 }
+function getFunctionsForMethod(context, methodName) {
+    var funNames, functions;
+    funNames = {};
+    traverseFunctions(context, methodName, funNames);
+    functions = Object.keys(funNames);
+    functions.sort((left, right) => compareByRank(context, left, right));
+    return functions;
+}
 function getSortedKeys(obj) {
     return Object.keys(obj).toSorted();
 }
 function isFunction(node) {
     return node.type === 'FunctionDeclaration';
+}
+function makeId() {
+    var id;
+    id = nextId.toString();
+    nextId++;
+    return id;
 }
 function multiAdd(dict, key, value) {
     var values;
@@ -456,7 +662,7 @@ function planTriggers(parent, property, node, astContext) {
     }
 }
 function processClass(cls) {
-    var _, _collection_11, _collection_14, _collection_2, _collection_5, _collection_8, body, context, fun, funName, model, name, node, proc, procedure, procs, variable;
+    var _, _collection_11, _collection_14, _collection_2, _collection_5, _collection_8, body, context, diagram, fun, funName, model, name, node, proc, procedure, procs, variable;
     body = cls.body.body;
     name = cls.id.name;
     context = {
@@ -518,6 +724,7 @@ function processClass(cls) {
             rewriteProcedure(context, procedure);
         }
     }
+    diagram = buildClassDiagram(context);
     model = {
         name: name,
         variables: context.variables,
@@ -527,7 +734,66 @@ function processClass(cls) {
         varReads: context.varReads,
         varWrites: context.varWrites
     };
-    return model;
+    return {
+        model: model,
+        diagram: diagram
+    };
+}
+function renderDependencies(items, names, left, top) {
+    var id, ids, name, right, width, y;
+    ids = [];
+    right = left;
+    y = top;
+    width = 0;
+    for (name of names) {
+        width = Math.max(width, calculateItemWidth(name));
+    }
+    for (name of names) {
+        id = addRectItem(items, 'rectangle', left, y, width, iconHeight, name);
+        ids.push(id);
+        right = Math.max(right, left + width);
+        y += iconHeight + verticalSpace;
+    }
+    return {
+        ids: ids,
+        right: right
+    };
+}
+function renderFunction(context, items, name, left, top) {
+    var depId, depInfo, funId, funItem, funRight, left2, proc, right;
+    proc = context.procs[name];
+    funId = addRectItem(items, 'rounded', left, top, calculateItemWidth(name), iconHeight, name);
+    funItem = items[funId];
+    funItem.aux = 10;
+    if (!(proc.reads.length === 0)) {
+        depInfo = renderDependencies(items, proc.reads, left, top);
+        for (depId of depInfo.ids) {
+            addArrow(items, depId, funId);
+        }
+        funItem.left = depInfo.right + horizontalSpace * 2;
+    }
+    funRight = funItem.left + funItem.width;
+    if (proc.writes.length === 0) {
+        right = funRight;
+    } else {
+        left2 = funRight + horizontalSpace * 2;
+        depInfo = renderDependencies(items, proc.writes, left2, top);
+        for (depId of depInfo.ids) {
+            addArrow(items, funId, depId);
+        }
+        right = depInfo.right;
+    }
+    return right;
+}
+function renderMethod(context, items, method) {
+    var functions, leftX, name, topY;
+    functions = getFunctionsForMethod(context, method.name);
+    leftX = 0;
+    topY = absBottom + verticalSpace;
+    for (name of functions) {
+        leftX = renderFunction(context, items, name, leftX, topY);
+        leftX += horizontalSpace;
+    }
 }
 function rewriteAst(parent, property, node, visitor, data) {
     var array2, copy, item, name, value, value2;
@@ -704,6 +970,16 @@ function traverseAst(parent, property, node, visitor, data) {
         }
     }
 }
+function traverseFunctions(context, name, funNames) {
+    var dependant, proc;
+    if (!(name in funNames)) {
+        funNames[name] = true;
+        proc = context.procs[name];
+        for (dependant of proc.dependants) {
+            traverseFunctions(context, dependant, funNames);
+        }
+    }
+}
 function tryGetExportedName(statement) {
     var exp, left, right;
     if (statement.type === 'ExpressionStatement') {
@@ -731,124 +1007,6 @@ function tryGetVariableName(statement) {
     } else {
         return undefined;
     }
-}
-function visualize(model) {
-    var diagram, secondPart;
-    diagram = {
-        'items': {
-            '1': {
-                'type': 'rounded',
-                'left': -50,
-                'top': -50,
-                'width': 200,
-                'height': 50,
-                'aux': 10,
-                'zIndex': 0,
-                'content': '<p>Some function</p>'
-            },
-            '2': {
-                'type': 'rectangle',
-                'left': -335,
-                'top': -50,
-                'width': 200,
-                'height': 50,
-                'zIndex': 1,
-                'content': '<p>inputVarOne</p>'
-            },
-            '3': {
-                'type': 'rectangle',
-                'left': -335,
-                'top': 30,
-                'width': 200,
-                'height': 50,
-                'zIndex': 2,
-                'content': '<p>inputVarTwo</p>'
-            },
-            '4': {
-                'type': 'rectangle',
-                'left': -335,
-                'top': 105,
-                'width': 200,
-                'height': 50,
-                'zIndex': 3,
-                'content': '<p>inputVarThree</p>'
-            },
-            '5': {
-                'type': 'rectangle',
-                'left': 225,
-                'top': -50,
-                'width': 200,
-                'height': 50,
-                'zIndex': 4,
-                'content': '<p>outputVarOne</p>'
-            }
-        },
-        'type': 'free',
-        'name': 'JacyExample'
-    };
-    secondPart = {
-        '6': {
-            'type': 'rectangle',
-            'left': 225,
-            'top': 30,
-            'width': 200,
-            'height': 50,
-            'zIndex': 5,
-            'content': '<p>outputVarTwo</p>'
-        },
-        '7': {
-            'type': 'connection',
-            'begin': '2',
-            'end': '1',
-            'role': 'horizontal',
-            'style': '{"headStyle":"arrow"}',
-            'zIndex': 6
-        },
-        '8': {
-            'type': 'connection',
-            'begin': '3',
-            'end': '1',
-            'role': 'horizontal',
-            'style': '{"headStyle":"arrow"}',
-            'zIndex': 6
-        },
-        '9': {
-            'type': 'connection',
-            'begin': '4',
-            'end': '1',
-            'role': 'horizontal',
-            'style': '{"headStyle":"arrow"}',
-            'zIndex': 6
-        },
-        '10': {
-            'type': 'connection',
-            'begin': '1',
-            'end': '5',
-            'role': 'horizontal',
-            'style': '{"headStyle":"arrow"}',
-            'zIndex': 6
-        },
-        '11': {
-            'type': 'connection',
-            'begin': '1',
-            'end': '6',
-            'role': 'horizontal',
-            'style': '{"headStyle":"arrow"}',
-            'zIndex': 6
-        },
-        '12': {
-            'type': 'text',
-            'left': -335,
-            'top': -110,
-            'width': 330,
-            'height': 30,
-            'content': '<p>JacyExample</p>',
-            'zIndex': 6,
-            'style': '{"font":"bold 20px Arimo","iconBack":"","color":"","iconBorder":"","internalLine":"","lineHeight":"","textAlign":"","borderStyle":"","shadowOffsetX":0,"shadowOffsetY":0,"shadowColor":"","shadowBlur":0,"borderWidth":""}'
-        }
-    };
-    Object.assign(diagram.items, secondPart);
-    return diagram;
 }
 unit.build = build;
 return unit;

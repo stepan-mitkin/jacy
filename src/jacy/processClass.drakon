@@ -37,7 +37,7 @@
         "24": {
             "type": "branch",
             "one": "27",
-            "branchId": 7,
+            "branchId": 8,
             "content": "Create model"
         },
         "25": {
@@ -50,7 +50,7 @@
             "type": "action",
             "one": "1",
             "two": "",
-            "content": "return model"
+            "content": "return {\n    model: model,\n    diagram: diagram\n}"
         },
         "27": {
             "type": "action",
@@ -207,7 +207,7 @@
         },
         "60": {
             "type": "loopend",
-            "one": "24",
+            "one": "68",
             "content": ""
         },
         "61": {
@@ -247,6 +247,17 @@
             "type": "action",
             "one": "55",
             "content": "sortTriggers(context)"
+        },
+        "68": {
+            "type": "branch",
+            "branchId": 7,
+            "one": "69",
+            "content": "Diagrams"
+        },
+        "69": {
+            "type": "action",
+            "one": "24",
+            "content": "diagram = buildClassDiagram(context)"
         }
     }
 }

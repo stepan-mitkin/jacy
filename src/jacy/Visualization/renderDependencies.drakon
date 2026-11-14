@@ -1,0 +1,82 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "items\nnames\nleft\ntop",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "6"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "return {\n    ids: ids,\n    right: right\n}"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "3",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "7",
+            "content": "name; names"
+        },
+        "6": {
+            "type": "action",
+            "one": "14",
+            "content": "ids = []\nright = left\ny = top"
+        },
+        "7": {
+            "type": "action",
+            "one": "10",
+            "content": "id = addRectItem(\n    items,\n    \"rectangle\",\n    left,\n    y,\n    width,\n    iconHeight,\n    name\n)"
+        },
+        "9": {
+            "type": "action",
+            "one": "11",
+            "content": "right = Math.max(right, left + width)"
+        },
+        "10": {
+            "type": "action",
+            "one": "9",
+            "content": "ids.push(id)"
+        },
+        "11": {
+            "type": "action",
+            "one": "4",
+            "content": "y += iconHeight + verticalSpace"
+        },
+        "12": {
+            "type": "loopbegin",
+            "one": "15",
+            "content": "name; names"
+        },
+        "13": {
+            "type": "loopend",
+            "one": "5",
+            "content": ""
+        },
+        "14": {
+            "type": "action",
+            "one": "12",
+            "content": "width = 0"
+        },
+        "15": {
+            "type": "action",
+            "one": "13",
+            "content": "width = Math.max(\n    width,\n    calculateItemWidth(name)\n)"
+        }
+    }
+}
