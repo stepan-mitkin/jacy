@@ -1,0 +1,54 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "name\nfunNames",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "question",
+            "one": "5",
+            "two": "1",
+            "flag1": 0,
+            "content": "name in funNames"
+        },
+        "5": {
+            "type": "action",
+            "one": "8",
+            "content": "funNames[name] = true"
+        },
+        "6": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "7": {
+            "type": "loopbegin",
+            "one": "9",
+            "content": "dependant; proc.dependants"
+        },
+        "8": {
+            "type": "action",
+            "one": "7",
+            "content": "proc = context.procs[name]"
+        },
+        "9": {
+            "type": "action",
+            "one": "6",
+            "content": "traverseFunctions(dependant, funNames)"
+        }
+    }
+}

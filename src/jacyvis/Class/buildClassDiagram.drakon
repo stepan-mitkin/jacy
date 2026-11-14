@@ -1,0 +1,75 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "return diagram"
+        },
+        "4": {
+            "type": "action",
+            "one": "7",
+            "two": "",
+            "content": "y = 0\nnextId = 1"
+        },
+        "5": {
+            "type": "loopend",
+            "one": "3",
+            "two": "",
+            "content": ""
+        },
+        "6": {
+            "type": "loopbegin",
+            "one": "9",
+            "two": "",
+            "content": "method; model.methods"
+        },
+        "7": {
+            "type": "action",
+            "one": "11",
+            "two": "",
+            "content": "diagram = {\n    name: model.name,\n    type: \"free\",\n    items: {}\n}"
+        },
+        "9": {
+            "type": "action",
+            "one": "10",
+            "two": "",
+            "content": "methodBuilder.buildMethod(method)"
+        },
+        "10": {
+            "type": "action",
+            "one": "5",
+            "two": "",
+            "content": "addSubdiagram(\n    methodBuilder.items,\n    methodBuilder.height\n)"
+        },
+        "11": {
+            "type": "action",
+            "one": "12",
+            "two": "",
+            "content": "addHeader(model.name)"
+        },
+        "12": {
+            "type": "action",
+            "one": "6",
+            "two": "",
+            "content": "methodBuilder = Method(model)"
+        }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": true,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "model"
+}
