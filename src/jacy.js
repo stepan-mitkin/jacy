@@ -686,6 +686,7 @@ function processClass(cls) {
         fun = _collection_2[funName];
         if (funName in context.methodNames) {
             proc = scanReadWrites(context, 'method', fun);
+            takeWritesFromArgs(context, fun, proc);
             context.methods.push(proc);
         } else {
             if (funName in context.callGraph) {
@@ -918,6 +919,20 @@ function sortTriggers(context) {
         proc.rank = rank;
         rank++;
     }
+}
+function takeWritesFromArgs(context, fun, proc) {
+    var name, param;
+    for (param of fun.params) {
+        if (param.type === 'Identifier') {
+            name = param.name;
+            if (name in context.variables) {
+                param.name = '_' + param.name;
+                proc.writes.push(name);
+                fun.body.body.unshift(createAssignment(createIdentifier(name), createIdentifier(param.name)));
+            }
+        }
+    }
+    proc.writes.sort();
 }
 function topoVisit(context, id, node) {
     var dependencies, dependency, depid;

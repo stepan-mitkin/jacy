@@ -101,7 +101,7 @@
         },
         "35": {
             "type": "action",
-            "one": "46",
+            "one": "70",
             "content": "proc = scanReadWrites(\n    context,\n    \"method\",\n    fun\n)"
         },
         "36": {
@@ -258,6 +258,11 @@
             "type": "action",
             "one": "24",
             "content": "diagram = buildClassDiagram(context)"
+        },
+        "70": {
+            "type": "action",
+            "one": "46",
+            "content": "takeWritesFromArgs(context, fun, proc)"
         }
     }
 }

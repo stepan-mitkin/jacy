@@ -17,15 +17,15 @@ function example05(runtime) {
         var x2;
         var y2;
         var distance;
-        function calculateDistance(point1, point2) {
+        function calculateDistance(_x1, _y1, _x2, _y2) {
             distance = undefined;
             var _plan_ = {};
             _plan_['chooseLineType'] = true;
             _plan_['printResult'] = true;
-            x1 = point1.x;
-            y1 = point1.y;
-            x2 = point2.x;
-            y2 = point2.y;
+            y2 = _y2;
+            x2 = _x2;
+            y1 = _y1;
+            x1 = _x1;
             runtime.runTriggers(_plan_, _triggers_);
         }
         function chooseLineType(_plan_) {

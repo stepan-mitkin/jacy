@@ -8,11 +8,7 @@ function Distance() {
     var x2;
     var y2;
     var distance;
-    function calculateDistance(point1, point2) {
-        x1 = point1.x;
-        y1 = point1.y;
-        x2 = point2.x;
-        y2 = point2.y;
+    function calculateDistance(x1, y1, x2, y2) {
     }
     function chooseLineType() {
         var dx, dy;
