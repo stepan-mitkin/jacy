@@ -80,7 +80,7 @@ function addToPlan(context, variable, output) {
     }
 }
 function addToProcGraph(context, procedure) {
-    var _selectValue_2, existing, procName, variable;
+    var _selectValue_2, existing, procName, variable, writer;
     procName = context.name + '.' + procedure.name;
     if (procedure.readWrites.length > 0) {
         throw new Error('Simultaneous reading and writing to a shared variable is not allowed: ' + procName);
@@ -106,7 +106,10 @@ function addToProcGraph(context, procedure) {
     for (variable of procedure.writes) {
         existing = context.varWrites[variable];
         if (existing) {
-            throw new Error('Only one function can write to a shared variable: ' + procName + ' and ' + context.name + '.' + existing);
+            writer = context.procs[existing];
+            if (!(procedure.type === 'method' && writer.type === 'method')) {
+                throw new Error('Only one function can write to a shared variable: ' + procName + ' and ' + context.name + '.' + existing);
+            }
         } else {
             context.varWrites[variable] = procedure.name;
         }
@@ -408,6 +411,23 @@ function createDummyDiagram() {
 function createEqualToUndefined(name) {
     return createBinary('===', createSelfie(name), createIdentifier('undefined'));
 }
+function createFunction(name) {
+    return {
+        'type': 'FunctionDeclaration',
+        'id': {
+            'type': 'Identifier',
+            'name': name
+        },
+        'params': [],
+        'body': {
+            'type': 'BlockStatement',
+            'body': []
+        },
+        'generator': false,
+        'expression': false,
+        'async': false
+    };
+}
 function createIdentifier(name) {
     return {
         'type': 'Identifier',
@@ -646,8 +666,39 @@ function getSelfVariable(node) {
 function getSortedKeys(obj) {
     return Object.keys(obj).toSorted();
 }
+function handleConstructor(context, cls) {
+    var arg, args, ass, body, call, ctr, ctrName;
+    args = cls.params.filter(par => par.type === 'Identifier').map(par => par.name);
+    if (args.length === 0) {
+    } else {
+        for (arg of args) {
+            context.variables[arg] = true;
+        }
+        ctrName = 'ctr';
+        ctr = createFunction(ctrName);
+        for (arg of args) {
+            ass = createAssignment(createSelfie(arg), createIdentifier(arg));
+            ctr.body.body.push(ass);
+        }
+        call = createCall(createIdentifier(ctrName), []);
+        body = cls.body.body;
+        body.splice(body.length - 1, 0, ctr);
+        body.splice(body.length - 1, 0, call);
+    }
+}
 function isFunction(node) {
     return node.type === 'FunctionDeclaration';
+}
+function isMethod(context, funName) {
+    if (funName in context.methodNames) {
+        return true;
+    } else {
+        if (funName === 'ctr') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 function makeId() {
     var id;
@@ -707,6 +758,7 @@ function processClass(cls) {
         methodNames: {},
         callGraph: {}
     };
+    handleConstructor(context, cls);
     for (node of body) {
         scanMember(context, node);
     }
@@ -714,7 +766,7 @@ function processClass(cls) {
     _collection_2 = context.functions;
     for (funName in _collection_2) {
         fun = _collection_2[funName];
-        if (funName in context.methodNames) {
+        if (isMethod(context, funName)) {
             proc = scanReadWrites(context, 'method', fun);
             takeWritesFromArgs(context, fun, proc);
             context.methods.push(proc);

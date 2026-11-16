@@ -1,0 +1,113 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\ncls",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "3",
+            "content": "Add to variables"
+        },
+        "3": {
+            "type": "action",
+            "one": "7",
+            "content": "args = cls.params.filter(\n    par => par.type === \"Identifier\"\n).map(par => par.name)"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "16",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "6",
+            "content": "arg; args"
+        },
+        "6": {
+            "type": "action",
+            "one": "4",
+            "content": "context.variables[arg] = true"
+        },
+        "7": {
+            "type": "question",
+            "one": "5",
+            "two": "8",
+            "flag1": 0,
+            "content": "args.length === 0"
+        },
+        "8": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 4,
+            "content": "Exit"
+        },
+        "9": {
+            "type": "branch",
+            "one": "12",
+            "branchId": 3,
+            "content": "Modify cls"
+        },
+        "12": {
+            "type": "action",
+            "one": "13",
+            "content": "call = createCall(\n    createIdentifier(ctrName),\n    []\n)"
+        },
+        "13": {
+            "type": "action",
+            "one": "14",
+            "content": "body = cls.body.body"
+        },
+        "14": {
+            "type": "action",
+            "one": "15",
+            "content": "body.splice(body.length - 1, 0, ctr)"
+        },
+        "15": {
+            "type": "action",
+            "one": "8",
+            "content": "body.splice(body.length - 1, 0, call)"
+        },
+        "16": {
+            "type": "branch",
+            "branchId": 2,
+            "one": "17",
+            "content": "Constructor"
+        },
+        "17": {
+            "type": "action",
+            "one": "18",
+            "content": "ctrName = \"ctr\""
+        },
+        "18": {
+            "type": "action",
+            "one": "19",
+            "content": "ctr = createFunction(ctrName)"
+        },
+        "19": {
+            "type": "loopbegin",
+            "one": "21",
+            "content": "arg; args"
+        },
+        "20": {
+            "type": "loopend",
+            "one": "9",
+            "content": ""
+        },
+        "21": {
+            "type": "action",
+            "one": "22",
+            "content": "ass = createAssignment(\n    createSelfie(arg),\n    createIdentifier(arg)\n)"
+        },
+        "22": {
+            "type": "action",
+            "one": "20",
+            "content": "ctr.body.body.push(ass)"
+        }
+    }
+}

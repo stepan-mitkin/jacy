@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\src\\main.js",
-            "args": ["sketches/example05.js", "--output", "sketches/example05processed.js", "--model", "sketches/example05processed.json", "--diagrams", "sketches/diagrams"]
+            "args": ["sketches/example05fun.js", "--output", "sketches/example05funprocessed.js", "--model", "sketches/example05funprocessed.json", "--diagrams", "sketches/diagrams"]
         }
     ]
 }

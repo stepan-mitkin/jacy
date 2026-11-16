@@ -42,7 +42,7 @@
         },
         "25": {
             "type": "branch",
-            "one": "29",
+            "one": "71",
             "branchId": 2,
             "content": "Find functions and variables"
         },
@@ -89,15 +89,8 @@
         },
         "33": {
             "type": "loopbegin",
-            "one": "34",
+            "one": "72",
             "content": "funName, fun; context.functions"
-        },
-        "34": {
-            "type": "question",
-            "one": "35",
-            "two": "39",
-            "flag1": 1,
-            "content": "funName in context.methodNames"
         },
         "35": {
             "type": "action",
@@ -263,6 +256,18 @@
             "type": "action",
             "one": "46",
             "content": "takeWritesFromArgs(context, fun, proc)"
+        },
+        "71": {
+            "type": "action",
+            "one": "29",
+            "content": "handleConstructor(context, cls)"
+        },
+        "72": {
+            "type": "question",
+            "one": "35",
+            "two": "39",
+            "flag1": 1,
+            "content": "isMethod(context, funName)"
         }
     }
 }
