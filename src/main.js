@@ -47,18 +47,18 @@ async function main() {
     const ast = esprima.parseScript(source);
     const jacyUnit = jacy();
     const jcbuild = jacyUnit.build(ast);
-    const formatted = escodegen.generate(jcbuild.ast);
     var models = JSON.stringify(jcbuild.models, null, 2)
-    if (args.output) {
-        await fs.writeFile(args.output, formatted, 'utf8');
-    } else {
-        console.log(formatted);
-    }
     if (args.model) {
         await fs.writeFile(args.model, models, 'utf8');
     } else {
         console.log(models);
     }
+    const formatted = escodegen.generate(jcbuild.ast);
+    if (args.output) {
+        await fs.writeFile(args.output, formatted, 'utf8');
+    } else {
+        console.log(formatted);
+    }    
     if (args.diagrams) {
         const diagramsDir = args.diagrams;
         await fs.mkdir(diagramsDir, { recursive: true });

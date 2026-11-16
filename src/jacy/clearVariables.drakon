@@ -72,7 +72,7 @@
             "type": "action",
             "one": "19",
             "two": "",
-            "content": "clearVar = createAssignment(\n    createIdentifier(variable),\n    createIdentifier(\"undefined\")\n)"
+            "content": "clearVar = createAssignment(\n    createSelfie(variable),\n    createIdentifier(\"undefined\")\n)"
         },
         "19": {
             "type": "action",

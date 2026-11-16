@@ -7,13 +7,13 @@
             "type": "branch",
             "content": "Main",
             "branchId": 0,
-            "one": "3"
+            "one": "71"
         },
         "3": {
             "type": "question",
-            "content": "node.type === \"Identifier\"",
+            "content": "name",
             "flag1": 1,
-            "one": "53",
+            "one": "68",
             "two": "1"
         },
         "4": {
@@ -145,11 +145,6 @@
             "content": "operation = \"read\"",
             "one": "11"
         },
-        "53": {
-            "type": "action",
-            "content": "name = node.name",
-            "one": "68"
-        },
         "55": {
             "one": "1",
             "type": "case",
@@ -205,6 +200,11 @@
             "type": "case",
             "two": "69",
             "content": "\"UnaryExpression\""
+        },
+        "71": {
+            "type": "action",
+            "one": "3",
+            "content": "name = getSelfVariable(node)"
         }
     },
     "type": "drakon",

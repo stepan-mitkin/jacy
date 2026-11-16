@@ -12,7 +12,7 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "var x1\nvar y1\nvar x2\nvar y2\nvar distance"
+            "content": "self.x1 = undefined\nself.y1 = undefined\nself.x2 = undefined\nself.y2 = undefined\nself.distance = undefined"
         }
     },
     "keywords": {

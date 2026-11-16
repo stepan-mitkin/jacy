@@ -1,0 +1,72 @@
+{
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "node",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "return prop.name"
+        },
+        "4": {
+            "type": "question",
+            "one": "5",
+            "two": "10",
+            "flag1": 1,
+            "content": "node.type === \"MemberExpression\""
+        },
+        "5": {
+            "type": "question",
+            "one": "6",
+            "two": "10",
+            "flag1": 1,
+            "content": "node.computed === false"
+        },
+        "6": {
+            "type": "action",
+            "one": "7",
+            "content": "obj = node.object\nprop = node.property"
+        },
+        "7": {
+            "type": "question",
+            "one": "8",
+            "two": "10",
+            "flag1": 1,
+            "content": "obj.type === \"Identifier\""
+        },
+        "8": {
+            "type": "question",
+            "one": "9",
+            "two": "10",
+            "flag1": 1,
+            "content": "obj.name === \"self\""
+        },
+        "9": {
+            "type": "question",
+            "one": "3",
+            "two": "10",
+            "flag1": 1,
+            "content": "prop.type === \"Identifier\""
+        },
+        "10": {
+            "type": "action",
+            "one": "1",
+            "content": "return undefined"
+        }
+    }
+}

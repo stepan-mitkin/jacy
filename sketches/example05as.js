@@ -3,26 +3,26 @@ var unit = {};
 
 function Distance() {
     var self = { _type: 'Distance' };
-    var x1;
-    var y1;
-    var x2;
-    var y2;
-    var distance;
+    self.x1 = undefined;
+    self.y1 = undefined;
+    self.x2 = undefined;
+    self.y2 = undefined;
+    self.distance = undefined;
     function calculateDistance(x1, y1, x2, y2) {
     }
     function chooseLineType() {
         var dx, dy;
-        if (y1 === y2) {
+        if (self.y1 === self.y2) {
             reportShortcut(true);
-            distance = Math.abs(x1 - x2);
+            self.distance = Math.abs(self.x1 - self.x2);
         } else {
-            if (x1 === x2) {
+            if (self.x1 === self.x2) {
                 reportShortcut(false);
-                distance = Math.abs(y1 - y2);
+                self.distance = Math.abs(self.y1 - self.y2);
             } else {
-                dx = x2 - x1;
-                dy = y2 - y1;
-                distance = Math.sqrt(dx * dx + dy * dy);
+                dx = self.x2 - self.x1;
+                dy = self.y2 - self.y1;
+                self.distance = Math.sqrt(dx * dx + dy * dy);
             }
         }
     }
@@ -31,10 +31,10 @@ function Distance() {
     }
     async function printResult() {
         await pause(1000);
-        if (distance > 100) {
-            console.log('The distance is long', x1, x2);
+        if (self.distance > 100) {
+            console.log('The distance is long', self.x1, self.x2);
         } else {
-            console.log('The distance is short', y1, y2);
+            console.log('The distance is short', self.y1, self.y2);
         }
     }
     function reportShortcut(horizontal) {

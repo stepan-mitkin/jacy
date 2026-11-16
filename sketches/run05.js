@@ -7,9 +7,11 @@ var runtime = TriggerRuntime05()
 var program = example05(runtime)
 var obj = program.Distance()
 obj.calculateDistance(10,20,20,50)
+console.log(obj.x1, obj.x2, obj.y1, obj.y2, obj.distance)
 
 var program2 = example05as(runtime)
 var obj2 = program2.Distance()
 obj2.calculateDistance(10, 20, 10, 50).then(() => {
+    console.log(obj2.x1, obj2.x2, obj2.y1, obj2.y2, obj2.distance)
     console.log('done')
 })

@@ -32,6 +32,9 @@ function addHeader(items, text) {
 function addReadiness(procedure, body) {
     var check, ifStatement, test, variable;
     test = undefined;
+    if (procedure.reads.length === 0) {
+        throw new Error('Trigger without reads: ' + procedure.name);
+    }
     for (variable of procedure.reads) {
         check = createEqualToUndefined(variable);
         if (test) {
@@ -199,7 +202,7 @@ function clearVariables(context, procedure, body) {
     }
     writeList = getSortedKeys(writes);
     for (variable of writeList) {
-        clearVar = createAssignment(createIdentifier(variable), createIdentifier('undefined'));
+        clearVar = createAssignment(createSelfie(variable), createIdentifier('undefined'));
         body.unshift(clearVar);
     }
 }
@@ -403,7 +406,7 @@ function createDummyDiagram() {
     return diagram;
 }
 function createEqualToUndefined(name) {
-    return createBinary('===', createIdentifier(name), createIdentifier('undefined'));
+    return createBinary('===', createSelfie(name), createIdentifier('undefined'));
 }
 function createIdentifier(name) {
     return {
@@ -477,6 +480,20 @@ function createReturn(argument) {
         argument: argument
     };
 }
+function createSelfie(name) {
+    return {
+        'type': 'MemberExpression',
+        'computed': false,
+        'object': {
+            'type': 'Identifier',
+            'name': 'self'
+        },
+        'property': {
+            'type': 'Identifier',
+            'name': name
+        }
+    };
+}
 function createString(literal) {
     return {
         type: 'Literal',
@@ -500,13 +517,14 @@ function declareTriggers(context, body) {
     body.unshift(decl);
 }
 function detectWrite(statement) {
-    var expr, left;
+    var expr, left, name;
     if (statement.type === 'ExpressionStatement') {
         expr = statement.expression;
         if (expr.type === 'AssignmentExpression') {
             left = expr.left;
-            if (left.type === 'Identifier') {
-                return left.name;
+            name = getSelfVariable(left);
+            if (name) {
+                return name;
             } else {
                 return undefined;
             }
@@ -533,49 +551,47 @@ function findAsyncTriggers(procs, procedure) {
 }
 function findReads(parent, property, node, astContext) {
     var _selectValue_2, name, operation;
-    if (node.type === 'Identifier') {
-        name = node.name;
-        if (name in astContext.variables) {
-            operation = 'read';
-            _selectValue_2 = parent.type;
-            if (_selectValue_2 === 'AssignmentExpression') {
-                if (property === 'left') {
-                    if (parent.operator === '=') {
-                        operation = 'write';
-                    } else {
-                        operation = 'readwrite';
-                    }
-                }
-            } else {
-                if (_selectValue_2 === 'UpdateExpression') {
-                    operation = 'readwrite';
+    name = getSelfVariable(node);
+    if (name && name in astContext.variables) {
+        operation = 'read';
+        _selectValue_2 = parent.type;
+        if (_selectValue_2 === 'AssignmentExpression') {
+            if (property === 'left') {
+                if (parent.operator === '=') {
+                    operation = 'write';
                 } else {
-                    if (_selectValue_2 === 'VariableDeclarator') {
-                        if (property === 'id') {
+                    operation = 'readwrite';
+                }
+            }
+        } else {
+            if (_selectValue_2 === 'UpdateExpression') {
+                operation = 'readwrite';
+            } else {
+                if (_selectValue_2 === 'VariableDeclarator') {
+                    if (property === 'id') {
+                        operation = 'none';
+                    }
+                } else {
+                    if (_selectValue_2 === 'MemberExpression') {
+                        if (!(property === 'object' || property === 'property' && parent.computed)) {
                             operation = 'none';
                         }
                     } else {
-                        if (_selectValue_2 === 'MemberExpression') {
-                            if (!(property === 'object' || property === 'property' && parent.computed)) {
-                                operation = 'none';
-                            }
-                        } else {
-                            if (!(_selectValue_2 === 'BinaryExpression' || _selectValue_2 === 'UnaryExpression' || _selectValue_2 === 'CallExpression' || _selectValue_2 === 'NewExpression')) {
-                                operation = 'none';
-                            }
+                        if (!(_selectValue_2 === 'BinaryExpression' || _selectValue_2 === 'UnaryExpression' || _selectValue_2 === 'CallExpression' || _selectValue_2 === 'NewExpression')) {
+                            operation = 'none';
                         }
                     }
                 }
             }
-            if (operation === 'read') {
-                astContext.reads[name] = true;
+        }
+        if (operation === 'read') {
+            astContext.reads[name] = true;
+        } else {
+            if (operation === 'write') {
+                astContext.writes[name] = true;
             } else {
-                if (operation === 'write') {
-                    astContext.writes[name] = true;
-                } else {
-                    if (operation === 'readwrite') {
-                        astContext.readWrites[name] = true;
-                    }
+                if (operation === 'readwrite') {
+                    astContext.readWrites[name] = true;
                 }
             }
         }
@@ -612,6 +628,20 @@ function getFunctionsForMethod(context, methodName) {
     functions = Object.keys(funNames);
     functions.sort((left, right) => compareByRank(context, left, right));
     return functions;
+}
+function getSelfVariable(node) {
+    var obj, prop;
+    if (node.type === 'MemberExpression' && node.computed === false) {
+        obj = node.object;
+        prop = node.property;
+        if (obj.type === 'Identifier' && obj.name === 'self' && prop.type === 'Identifier') {
+            return prop.name;
+        } else {
+            return undefined;
+        }
+    } else {
+        return undefined;
+    }
 }
 function getSortedKeys(obj) {
     return Object.keys(obj).toSorted();
@@ -926,9 +956,8 @@ function takeWritesFromArgs(context, fun, proc) {
         if (param.type === 'Identifier') {
             name = param.name;
             if (name in context.variables) {
-                param.name = '_' + param.name;
                 proc.writes.push(name);
-                fun.body.body.unshift(createAssignment(createIdentifier(name), createIdentifier(param.name)));
+                fun.body.body.unshift(createAssignment(createSelfie(name), createIdentifier(param.name)));
             }
         }
     }
@@ -1011,6 +1040,26 @@ function tryGetExportedName(statement) {
     }
 }
 function tryGetVariableName(statement) {
+    var expr, left, name, right;
+    if (statement.type === 'ExpressionStatement') {
+        expr = statement.expression;
+        if (expr.type === 'AssignmentExpression') {
+            left = expr.left;
+            right = expr.right;
+            name = getSelfVariable(left);
+            if (name && right.type === 'Identifier' && right.name === 'undefined') {
+                return name;
+            } else {
+                return undefined;
+            }
+        } else {
+            return undefined;
+        }
+    } else {
+        return undefined;
+    }
+}
+function tryGetVariableNameFromDecl(statement) {
     var decl;
     if (statement.type === 'VariableDeclaration' && statement.kind === 'var' && statement.declarations && statement.declarations.length === 1) {
         decl = statement.declarations[0];

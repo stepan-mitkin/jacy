@@ -20,7 +20,7 @@
         },
         "3": {
             "type": "action",
-            "one": "8",
+            "one": "10",
             "content": "left = expr.left"
         },
         "4": {
@@ -52,12 +52,17 @@
             "one": "9",
             "two": "7",
             "flag1": 1,
-            "content": "left.type === \"Identifier\""
+            "content": "name"
         },
         "9": {
             "type": "action",
             "one": "1",
-            "content": "return left.name"
+            "content": "return name"
+        },
+        "10": {
+            "type": "action",
+            "one": "8",
+            "content": "name = getSelfVariable(left)"
         }
     }
 }

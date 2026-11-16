@@ -12,7 +12,7 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "return createBinary(\n    \"===\",\n    createIdentifier(name),\n    createIdentifier(\"undefined\")\n)"
+            "content": "return createBinary(\n    \"===\",\n    createSelfie(name),\n    createIdentifier(\"undefined\")\n)"
         }
     },
     "keywords": {

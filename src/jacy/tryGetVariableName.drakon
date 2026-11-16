@@ -11,67 +11,63 @@
         },
         "4": {
             "type": "question",
-            "one": "5",
+            "one": "15",
             "two": "13",
             "flag1": 1,
-            "content": "statement.type === \"VariableDeclaration\""
-        },
-        "5": {
-            "type": "question",
-            "one": "6",
-            "two": "13",
-            "flag1": 1,
-            "content": "statement.kind === \"var\""
-        },
-        "6": {
-            "type": "question",
-            "one": "7",
-            "two": "13",
-            "flag1": 1,
-            "content": "statement.declarations"
-        },
-        "7": {
-            "type": "question",
-            "one": "8",
-            "two": "13",
-            "flag1": 1,
-            "content": "statement.declarations.length === 1"
-        },
-        "8": {
-            "type": "action",
-            "one": "9",
-            "content": "decl = statement.declarations[0]"
-        },
-        "9": {
-            "type": "question",
-            "one": "10",
-            "two": "13",
-            "flag1": 1,
-            "content": "decl.type === \"VariableDeclarator\""
-        },
-        "10": {
-            "type": "question",
-            "one": "11",
-            "two": "13",
-            "flag1": 1,
-            "content": "decl.init === null"
-        },
-        "11": {
-            "type": "question",
-            "one": "12",
-            "two": "13",
-            "flag1": 1,
-            "content": "decl.id.type === \"Identifier\""
-        },
-        "12": {
-            "type": "action",
-            "one": "1",
-            "content": "return decl.id.name"
+            "content": "statement.type === \"ExpressionStatement\""
         },
         "13": {
             "type": "action",
             "one": "1",
             "content": "return undefined"
+        },
+        "14": {
+            "type": "question",
+            "one": "16",
+            "two": "13",
+            "flag1": 1,
+            "content": "expr.type === \"AssignmentExpression\""
+        },
+        "15": {
+            "type": "action",
+            "one": "14",
+            "content": "expr = statement.expression"
+        },
+        "16": {
+            "type": "action",
+            "one": "18",
+            "content": "left = expr.left\nright = expr.right"
+        },
+        "17": {
+            "type": "question",
+            "one": "19",
+            "two": "13",
+            "flag1": 1,
+            "content": "name"
+        },
+        "18": {
+            "type": "action",
+            "one": "17",
+            "content": "name = getSelfVariable(left)"
+        },
+        "19": {
+            "type": "question",
+            "one": "20",
+            "two": "13",
+            "flag1": 1,
+            "content": "right.type === \"Identifier\""
+        },
+        "20": {
+            "type": "question",
+            "one": "21",
+            "two": "13",
+            "flag1": 1,
+            "content": "right.name === \"undefined\""
+        },
+        "21": {
+            "type": "action",
+            "one": "1",
+            "content": "return name"
         }
     },
     "keywords": {
