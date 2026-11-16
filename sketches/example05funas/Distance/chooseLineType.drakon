@@ -13,44 +13,48 @@
             "type": "action",
             "one": "1",
             "two": "",
-            "content": "push({distance: Math.abs(x1 - x2)})"
+            "content": "self.distance = Math.abs(self.x1 - self.x2)"
         },
         "5": {
             "type": "question",
-            "one": "4",
+            "one": "11",
             "two": "6",
             "flag1": 1,
-            "content": "y1 === y2"
+            "content": "self.y1 === self.y2"
         },
         "6": {
             "type": "question",
-            "one": "7",
+            "one": "12",
             "two": "10",
             "flag1": 1,
-            "content": "x1 === x2"
+            "content": "self.x1 === self.x2"
         },
         "7": {
             "type": "action",
             "one": "1",
-            "content": "push({distance: Math.abs(y1 - y2)})"
-        },
-        "8": {
-            "type": "action",
-            "one": "1",
-            "two": "",
-            "content": "push({distance: dist})"
+            "content": "self.distance = Math.abs(self.y1 - self.y2)"
         },
         "9": {
             "type": "action",
-            "one": "8",
+            "one": "1",
             "two": "",
-            "content": "dist = Math.sqrt(dx * dx + dy * dy)"
+            "content": "self.distance = Math.sqrt(dx * dx + dy * dy)"
         },
         "10": {
             "type": "action",
             "one": "9",
             "two": "",
-            "content": "dx = x2 - x1\ndy = y2 - y1"
+            "content": "dx = self.x2 - self.x1\ndy = self.y2 - self.y1"
+        },
+        "11": {
+            "type": "action",
+            "one": "4",
+            "content": "reportShortcut(true)"
+        },
+        "12": {
+            "type": "action",
+            "one": "7",
+            "content": "reportShortcut(false)"
         }
     }
 }

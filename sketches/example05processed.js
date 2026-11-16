@@ -4,11 +4,11 @@ function example05(runtime) {
         var _triggers_ = {
             chooseLineType: {
                 fun: chooseLineType,
-                rank: 2
+                rank: 3
             },
             printResult: {
                 fun: printResult,
-                rank: 3
+                rank: 4
             }
         };
         var self = { _type: 'Distance' };

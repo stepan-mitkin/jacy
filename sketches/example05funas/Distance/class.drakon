@@ -12,7 +12,16 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "var x1\nvar y1\nvar x2\nvar y2\nvar distance"
+            "content": "self.distance = undefined"
         }
-    }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": true,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "x1\ny1\nx2\ny2"
 }

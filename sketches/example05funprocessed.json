@@ -26,7 +26,7 @@
           "y2"
         ],
         "readWrites": [],
-        "rank": 1
+        "rank": 3
       },
       {
         "type": "method",
@@ -45,7 +45,7 @@
           "y2"
         ],
         "readWrites": [],
-        "rank": 5
+        "rank": 1
       }
     ],
     "triggers": [
@@ -69,7 +69,7 @@
           "distance"
         ],
         "readWrites": [],
-        "rank": 2
+        "rank": 4
       },
       {
         "type": "trigger",
@@ -89,7 +89,7 @@
         ],
         "writes": [],
         "readWrites": [],
-        "rank": 3
+        "rank": 5
       }
     ],
     "callGraph": {

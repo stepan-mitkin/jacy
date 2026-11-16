@@ -11,13 +11,18 @@
         },
         "5": {
             "type": "action",
-            "one": "6",
+            "one": "7",
             "content": "const iconHeight = 50\nconst verticalSpace = 20\nconst horizontalSpace = 30"
         },
         "6": {
             "type": "action",
             "one": "1",
             "content": "nextId = 1\nabsBottom = 0"
+        },
+        "7": {
+            "type": "action",
+            "one": "6",
+            "content": "const ctrName = \"ctr\""
         }
     }
 }

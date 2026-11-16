@@ -15,8 +15,8 @@
         },
         "4": {
             "type": "action",
-            "one": "10",
-            "content": "sorted = topologicalSort(\n    context.procs,\n    getDeps\n)"
+            "one": "11",
+            "content": "sorted = topologicalSort(\n    context.procs,\n    node => getDeps(context, node)\n)"
         },
         "5": {
             "type": "loopend",
@@ -47,6 +47,11 @@
             "type": "action",
             "one": "6",
             "content": "rank = 1"
+        },
+        "11": {
+            "type": "action",
+            "one": "10",
+            "content": "sorted.reverse()"
         }
     }
 }

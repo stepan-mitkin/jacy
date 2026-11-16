@@ -49,14 +49,9 @@
         },
         "9": {
             "type": "branch",
-            "one": "12",
+            "one": "13",
             "branchId": 3,
             "content": "Modify cls"
-        },
-        "12": {
-            "type": "action",
-            "one": "13",
-            "content": "call = createCall(\n    createIdentifier(ctrName),\n    []\n)"
         },
         "13": {
             "type": "action",
@@ -65,24 +60,14 @@
         },
         "14": {
             "type": "action",
-            "one": "15",
-            "content": "body.splice(body.length - 1, 0, ctr)"
-        },
-        "15": {
-            "type": "action",
             "one": "8",
-            "content": "body.splice(body.length - 1, 0, call)"
+            "content": "body.splice(body.length - 1, 0, ctr)"
         },
         "16": {
             "type": "branch",
             "branchId": 2,
-            "one": "17",
-            "content": "Constructor"
-        },
-        "17": {
-            "type": "action",
             "one": "18",
-            "content": "ctrName = \"ctr\""
+            "content": "Constructor"
         },
         "18": {
             "type": "action",

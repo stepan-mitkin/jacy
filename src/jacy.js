@@ -5,6 +5,7 @@ var absBottom, nextId;
 const iconHeight = 50;
 const verticalSpace = 20;
 const horizontalSpace = 30;
+const ctrName = 'ctr';
 nextId = 1;
 absBottom = 0;
 function addArrow(items, begin, end) {
@@ -21,6 +22,20 @@ function addArrow(items, begin, end) {
         zIndex: nextId
     };
     items[id] = item;
+}
+function addCtrCall(context, cls) {
+    var body, call, ctr;
+    ctr = context.functions[ctrName];
+    if (ctr) {
+        body = cls.body.body;
+        if (ctr.async) {
+            call = createAsyncCall(createIdentifier(ctrName), []);
+            cls.async = true;
+        } else {
+            call = createCall(createIdentifier(ctrName), []);
+        }
+        body.splice(body.length - 1, 0, call);
+    }
 }
 function addHeader(items, text) {
     var header, headerId, style;
@@ -239,6 +254,15 @@ function createAssignment(left, right) {
             operator: '=',
             left: left,
             right: right
+        }
+    };
+}
+function createAsyncCall(callee, argNames) {
+    return {
+        type: 'ExpressionStatement',
+        expression: {
+            type: 'AwaitExpression',
+            argument: createCallExp(callee, argNames)
         }
     };
 }
@@ -638,8 +662,8 @@ function findTriggers(context, method) {
 }
 function findWrittenVariable(statement) {
 }
-function getDeps(node) {
-    return node.dependencies;
+function getDeps(context, node) {
+    return node.dependants;
 }
 function getFunctionsForMethod(context, methodName) {
     var funNames, functions;
@@ -667,23 +691,20 @@ function getSortedKeys(obj) {
     return Object.keys(obj).toSorted();
 }
 function handleConstructor(context, cls) {
-    var arg, args, ass, body, call, ctr, ctrName;
+    var arg, args, ass, body, ctr;
     args = cls.params.filter(par => par.type === 'Identifier').map(par => par.name);
     if (args.length === 0) {
     } else {
         for (arg of args) {
             context.variables[arg] = true;
         }
-        ctrName = 'ctr';
         ctr = createFunction(ctrName);
         for (arg of args) {
             ass = createAssignment(createSelfie(arg), createIdentifier(arg));
             ctr.body.body.push(ass);
         }
-        call = createCall(createIdentifier(ctrName), []);
         body = cls.body.body;
         body.splice(body.length - 1, 0, ctr);
-        body.splice(body.length - 1, 0, call);
     }
 }
 function isFunction(node) {
@@ -807,6 +828,7 @@ function processClass(cls) {
             rewriteProcedure(context, procedure);
         }
     }
+    addCtrCall(context, cls);
     diagram = buildClassDiagram(context);
     model = {
         name: name,
@@ -994,7 +1016,8 @@ function scanReadWrites(context, type, fun) {
 }
 function sortTriggers(context) {
     var name, proc, rank, sorted;
-    sorted = topologicalSort(context.procs, getDeps);
+    sorted = topologicalSort(context.procs, node => getDeps(context, node));
+    sorted.reverse();
     rank = 1;
     for (name of sorted) {
         proc = context.procs[name];

@@ -1,0 +1,61 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "context\ncls",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "8"
+        },
+        "4": {
+            "type": "action",
+            "one": "5",
+            "content": "call = createCall(\n    createIdentifier(ctrName),\n    []\n)"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "body.splice(body.length - 1, 0, call)"
+        },
+        "6": {
+            "type": "action",
+            "one": "9",
+            "content": "body = cls.body.body"
+        },
+        "7": {
+            "type": "question",
+            "one": "6",
+            "two": "1",
+            "flag1": 1,
+            "content": "ctr"
+        },
+        "8": {
+            "type": "action",
+            "one": "7",
+            "content": "ctr = context.functions[ctrName]"
+        },
+        "9": {
+            "type": "question",
+            "one": "4",
+            "two": "11",
+            "flag1": 0,
+            "content": "ctr.async "
+        },
+        "10": {
+            "type": "action",
+            "one": "5",
+            "content": "cls.async  = true"
+        },
+        "11": {
+            "type": "action",
+            "one": "10",
+            "content": "call = createAsyncCall(\n    createIdentifier(ctrName),\n    []\n)"
+        }
+    }
+}

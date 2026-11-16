@@ -200,7 +200,7 @@
         },
         "60": {
             "type": "loopend",
-            "one": "68",
+            "one": "73",
             "content": ""
         },
         "61": {
@@ -268,6 +268,11 @@
             "two": "39",
             "flag1": 1,
             "content": "isMethod(context, funName)"
+        },
+        "73": {
+            "type": "action",
+            "one": "68",
+            "content": "addCtrCall(context, cls)"
         }
     }
 }

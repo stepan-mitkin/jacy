@@ -12,19 +12,28 @@
         "3": {
             "type": "action",
             "one": "1",
-            "content": "console.log(\"The distance is long\")"
+            "content": "console.log(\"Horizontal shortcut\")"
         },
         "4": {
             "type": "question",
             "one": "3",
             "two": "5",
             "flag1": 1,
-            "content": "distance > 100"
+            "content": "horizontal"
         },
         "5": {
             "type": "action",
             "one": "1",
-            "content": "console.log(\"The distance is short\")"
+            "content": "console.log(\"Vertical shortcut\")"
         }
-    }
+    },
+    "keywords": {
+        "function": false,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "horizontal"
 }

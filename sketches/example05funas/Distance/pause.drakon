@@ -7,26 +7,21 @@
         "2": {
             "type": "branch",
             "branchId": 0,
-            "one": "4"
+            "one": "3"
         },
-        "4": {
-            "type": "action",
-            "one": "5",
-            "content": "push(\n    {\n        x1: point1.x,\n        y1: point1.y,\n        x2: point2.x,\n        y2: point2.y\n    }\n)"
-        },
-        "5": {
+        "3": {
             "type": "action",
             "one": "1",
-            "content": "return distance"
+            "content": "return new Promise(\n    resolve => setTimeout(resolve, ms)\n)"
         }
     },
     "keywords": {
         "function": false,
         "machine": false,
         "async": false,
-        "export": true,
+        "export": false,
         "algoprop": false,
         "lazy": false
     },
-    "params": "point1\npoint2"
+    "params": "ms"
 }
