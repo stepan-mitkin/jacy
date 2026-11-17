@@ -1,4 +1,4 @@
-# jacy
+# Jacy
 
 ## What Is Jacy?
 
@@ -306,6 +306,8 @@ Create a folder for each class.
 
 Inside the folder, create a function named `class` and enable its **export** flag.
 
+![A Jacy class function in DrakonTech](/images/class.png)
+
 ### 3. Define shared variables
 
 In the body of the `class` function, declare the shared variables, one per line:
@@ -327,6 +329,8 @@ Its parameters become input variables.
 
 The method body may be empty. Simply accepting input parameters can be sufficient to activate the triggers that depend on those variables.
 
+![A Jacy method in DrakonTech](/images/runMe.png)
+
 ### 5. Add triggers
 
 Create a private function inside the class folder.
@@ -334,5 +338,7 @@ Create a private function inside the class folder.
 A function becomes a trigger when it reads shared variables.
 
 Triggers may also write to shared variables and perform side effects.
+
+![A Jacy trigger in DrakonTech](/images/calculateFoo.png)
 
 Jacy analyzes these reads and writes to determine the trigger's dependencies and execution order.
