@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Shorthand",
+    "variables": {
+      "moo": true,
+      "url": true,
+      "bar": true,
+      "foo": true
+    },
+    "methods": [
+      {
+        "type": "method",
+        "name": "ctr",
+        "isAsync": false,
+        "dependants": [
+          "calculateFoo",
+          "fetchBar"
+        ],
+        "dependencies": [],
+        "reads": [],
+        "writes": [
+          "moo",
+          "url"
+        ],
+        "readWrites": [],
+        "rank": 1
+      }
+    ],
+    "triggers": [
+      {
+        "type": "trigger",
+        "name": "calculateFoo",
+        "isAsync": false,
+        "dependants": [],
+        "dependencies": [
+          "ctr",
+          "fetchBar"
+        ],
+        "reads": [
+          "bar",
+          "moo"
+        ],
+        "writes": [
+          "foo"
+        ],
+        "readWrites": [],
+        "rank": 3
+      },
+      {
+        "type": "trigger",
+        "name": "fetchBar",
+        "isAsync": true,
+        "dependants": [
+          "calculateFoo"
+        ],
+        "dependencies": [
+          "ctr"
+        ],
+        "reads": [
+          "url"
+        ],
+        "writes": [
+          "bar"
+        ],
+        "readWrites": [],
+        "rank": 2
+      }
+    ],
+    "callGraph": {
+      "fetch": [
+        "fetchBar"
+      ]
+    },
+    "varReads": {
+      "bar": [
+        "calculateFoo"
+      ],
+      "moo": [
+        "calculateFoo"
+      ],
+      "url": [
+        "fetchBar"
+      ]
+    },
+    "varWrites": {
+      "moo": "ctr",
+      "url": "ctr",
+      "foo": "calculateFoo",
+      "bar": "fetchBar"
+    }
+  },
+  {
+    "name": "Simple",
+    "variables": {
+      "bar": true,
+      "foo": true,
+      "moo": true,
+      "url": true
+    },
+    "methods": [
+      {
+        "type": "method",
+        "name": "runMe",
+        "isAsync": false,
+        "dependants": [
+          "calculateFoo",
+          "fetchBar"
+        ],
+        "dependencies": [],
+        "reads": [],
+        "writes": [
+          "moo",
+          "url"
+        ],
+        "readWrites": [],
+        "rank": 1
+      }
+    ],
+    "triggers": [
+      {
+        "type": "trigger",
+        "name": "calculateFoo",
+        "isAsync": false,
+        "dependants": [],
+        "dependencies": [
+          "fetchBar",
+          "runMe"
+        ],
+        "reads": [
+          "bar",
+          "moo"
+        ],
+        "writes": [
+          "foo"
+        ],
+        "readWrites": [],
+        "rank": 3
+      },
+      {
+        "type": "trigger",
+        "name": "fetchBar",
+        "isAsync": true,
+        "dependants": [
+          "calculateFoo"
+        ],
+        "dependencies": [
+          "runMe"
+        ],
+        "reads": [
+          "url"
+        ],
+        "writes": [
+          "bar"
+        ],
+        "readWrites": [],
+        "rank": 2
+      }
+    ],
+    "callGraph": {
+      "fetch": [
+        "fetchBar"
+      ]
+    },
+    "varReads": {
+      "bar": [
+        "calculateFoo"
+      ],
+      "moo": [
+        "calculateFoo"
+      ],
+      "url": [
+        "fetchBar"
+      ]
+    },
+    "varWrites": {
+      "moo": "runMe",
+      "url": "runMe",
+      "foo": "calculateFoo",
+      "bar": "fetchBar"
+    }
+  }
+]
