@@ -129,28 +129,28 @@ The module function contains the definitions of your classes and exports their f
 
 ```javascript
 function example04() { // The module function
-var unit = {};
+    var unit = {}; // The module object
 
-function Simple() { // The class factory function.
-    var self = {}; // It is important to use the word "self" for the instance.
-    self.bar = undefined; // Define the "bar" shared variable
-    self.foo = undefined; // Define the "foo" shared variable
-    function calculateFoo() { // a trigger
-        self.foo = self.bar.origin + self.moo;
+    function Simple() { // The class factory function.
+        var self = {}; // It is important to use the word "self" to refer to the class instance.
+        self.bar = undefined; // Define the "bar" shared variable
+        self.foo = undefined; // Define the "foo" shared variable
+        function calculateFoo() { // A trigger
+            self.foo = self.bar.origin + self.moo;
+        }
+        async function fetchBar() { // A trigger
+            const response = await fetch(self.url);
+            self.bar = await response.json();
+        }
+        function runMe(moo, url) { // runMe method. moo an url become input shared variables
+        }
+        self.runMe = runMe; // runMe method is exported here.
+        return self;
     }
-    async function fetchBar() { // a trigger
-        const response = await fetch(self.url);
-        self.bar = await response.json();
-    }
-    function runMe(moo, url) { // runMe method. moo an url become input shared variables
-    }
-    self.runMe = runMe; // runMe method is exported here.
-    return self;
+    unit.Simple = Simple; // Simple class is exported here.
+    return unit; // The module function returns the module object.
 }
-unit.Simple = Simple; // Simple class is exported here.
-return unit; // The module function returns a module object.
-}
-module.exports = { example04 };
+module.exports = { example04 }; // Export the module function (not necessary in the browser).
 ```
 
 
