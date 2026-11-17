@@ -8,6 +8,8 @@ You write functions in the usual imperative style. Jacy connects them based on w
 
 **Jacy's goal is to free you from unnecessary function calls.**
 
+Jacy is inspired by Enn Tõugu’s work on conceptual programming.
+
 ## Example
 
 You write two independent functions:
