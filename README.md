@@ -126,6 +126,34 @@ You can write JavaScript manually, provided it follows the conventions described
 
 The module function contains the definitions of your classes and exports their factory functions.
 
+
+```javascript
+function example04() { // The module function
+var unit = {};
+
+function Simple() { // The class factory function.
+    var self = {}; // It is important to use the word "self" for the instance.
+    self.bar = undefined; // Define the "bar" shared variable
+    self.foo = undefined; // Define the "foo" shared variable
+    function calculateFoo() { // a trigger
+        self.foo = self.bar.origin + self.moo;
+    }
+    async function fetchBar() { // a trigger
+        const response = await fetch(self.url);
+        self.bar = await response.json();
+    }
+    function runMe(moo, url) { // runMe method. moo an url become input shared variables
+    }
+    self.runMe = runMe; // runMe method is exported here.
+    return self;
+}
+unit.Simple = Simple; // Simple class is exported here.
+return unit; // The module function returns a module object.
+}
+module.exports = { example04 };
+```
+
+
 ### 2. Organize your code into classes
 
 Use the factory function pattern to define classes.
