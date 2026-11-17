@@ -1,7 +1,0 @@
-{
-    "type": "field",
-    "datatype": "string",
-    "nullable": true,
-    "maxlength": 30,
-    "reference": "dh3.diagram.items.key"
-}
