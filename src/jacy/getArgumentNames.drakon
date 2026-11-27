@@ -1,0 +1,22 @@
+{
+    "keywords": {
+        "function": true
+    },
+    "params": "fun",
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "action",
+            "one": "1",
+            "content": "return fun.params.filter(\n    par => par.type === \"Identifier\"\n).map(par => par.name)"
+        }
+    }
+}
