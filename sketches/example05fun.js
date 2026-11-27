@@ -3,7 +3,6 @@ var unit = {};
 
 function Distance(x1, y1, x2, y2) {
     var self = { _type: 'Distance' };
-    self.distance = undefined;
     function calculateDistance(x1, y1, x2, y2) {
     }
     function chooseLineType() {

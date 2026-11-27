@@ -3,8 +3,6 @@ var unit = {};
 
 function Shorthand(moo, url) {
     var self = { _type: 'Shorthand' };
-    self.bar = undefined;
-    self.foo = undefined;
     function calculateFoo() {
         self.foo = self.bar.origin + self.moo;
     }
@@ -17,8 +15,6 @@ function Shorthand(moo, url) {
 }
 function Simple() {
     var self = { _type: 'Simple' };
-    self.bar = undefined;
-    self.foo = undefined;
     function calculateFoo() {
         self.foo = self.bar.origin + self.moo;
     }

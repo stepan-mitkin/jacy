@@ -12,7 +12,6 @@ function example05fun(runtime) {
             }
         };
         var self = { _type: 'Distance' };
-        self.distance = undefined;
         function calculateDistance(x1, y1, x2, y2) {
             self.distance = undefined;
             var _plan_ = {};

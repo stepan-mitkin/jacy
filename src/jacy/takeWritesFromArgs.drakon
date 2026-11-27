@@ -37,15 +37,8 @@
         },
         "7": {
             "type": "action",
-            "one": "8",
+            "one": "13",
             "content": "name = param.name"
-        },
-        "8": {
-            "type": "question",
-            "one": "9",
-            "two": "4",
-            "flag1": 1,
-            "content": "name in context.variables"
         },
         "9": {
             "type": "action",
@@ -56,6 +49,11 @@
             "type": "action",
             "one": "4",
             "content": "fun.body.body.unshift(\n    createAssignment(\n        createSelfie(name),\n        createIdentifier(param.name)\n    )\n)"
+        },
+        "13": {
+            "type": "action",
+            "one": "9",
+            "content": "context.variables[name] = true"
         }
     }
 }

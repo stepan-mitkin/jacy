@@ -596,7 +596,7 @@ function findAsyncTriggers(procs, procedure) {
 function findReads(parent, property, node, astContext) {
     var _selectValue_2, name, operation;
     name = getSelfVariable(node);
-    if (name && name in astContext.variables) {
+    if (name) {
         operation = 'read';
         _selectValue_2 = parent.type;
         if (_selectValue_2 === 'AssignmentExpression') {
@@ -630,12 +630,15 @@ function findReads(parent, property, node, astContext) {
         }
         if (operation === 'read') {
             astContext.reads[name] = true;
+            astContext.variables[name] = true;
         } else {
             if (operation === 'write') {
                 astContext.writes[name] = true;
+                astContext.variables[name] = true;
             } else {
                 if (operation === 'readwrite') {
                     astContext.readWrites[name] = true;
+                    astContext.variables[name] = true;
                 }
             }
         }
@@ -1030,10 +1033,9 @@ function takeWritesFromArgs(context, fun, proc) {
     for (param of fun.params) {
         if (param.type === 'Identifier') {
             name = param.name;
-            if (name in context.variables) {
-                proc.writes.push(name);
-                fun.body.body.unshift(createAssignment(createSelfie(name), createIdentifier(param.name)));
-            }
+            context.variables[name] = true;
+            proc.writes.push(name);
+            fun.body.body.unshift(createAssignment(createSelfie(name), createIdentifier(param.name)));
         }
     }
     proc.writes.sort();

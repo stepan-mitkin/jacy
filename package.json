@@ -1,6 +1,6 @@
 {
   "name": "jacy",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "An experiment in reactive programming in JavaScript",
   "main": "main.js",
   "scripts": {

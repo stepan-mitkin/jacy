@@ -12,11 +12,6 @@ function example05(runtime) {
             }
         };
         var self = { _type: 'Distance' };
-        self.x1 = undefined;
-        self.y1 = undefined;
-        self.x2 = undefined;
-        self.y2 = undefined;
-        self.distance = undefined;
         function calculateDistance(x1, y1, x2, y2) {
             self.distance = undefined;
             var _plan_ = {};
@@ -55,9 +50,9 @@ function example05(runtime) {
                 return true;
             }
             if (self.distance > 100) {
-                console.log('The distance is long', self.x1, self.x2);
+                console.log('The distance is long', self.x1, self.y1, self.x2, self.y2, self.distance);
             } else {
-                console.log('The distance is short', self.y1, self.y2);
+                console.log('The distance is short', self.x1, self.y1, self.x2, self.y2, self.distance);
             }
         }
         function reportShortcut(horizontal) {

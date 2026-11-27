@@ -7,12 +7,7 @@
         "2": {
             "type": "branch",
             "branchId": 0,
-            "one": "3"
-        },
-        "3": {
-            "type": "action",
-            "one": "1",
-            "content": "self.distance = undefined"
+            "one": "1"
         }
     },
     "keywords": {

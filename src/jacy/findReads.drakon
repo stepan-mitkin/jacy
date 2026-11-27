@@ -13,46 +13,46 @@
             "type": "question",
             "content": "name",
             "flag1": 1,
-            "one": "68",
+            "one": "52",
             "two": "1"
         },
         "4": {
             "type": "select",
-            "content": "operation",
-            "one": "9"
+            "one": "9",
+            "content": "operation"
         },
         "5": {
             "type": "case",
-            "content": "\"readwrite\"",
             "one": "6",
-            "two": "55"
+            "two": "55",
+            "content": "\"readwrite\""
         },
         "6": {
             "type": "action",
-            "content": "astContext.readWrites[name] = true",
-            "one": "1"
+            "one": "72",
+            "content": "astContext.readWrites[name] = true"
         },
         "7": {
             "type": "case",
-            "content": "\"write\"",
             "one": "8",
-            "two": "5"
+            "two": "5",
+            "content": "\"write\""
         },
         "8": {
             "type": "action",
-            "content": "astContext.writes[name] = true",
-            "one": "1"
+            "one": "72",
+            "content": "astContext.writes[name] = true"
         },
         "9": {
             "type": "case",
-            "content": "\"read\"",
             "one": "10",
-            "two": "7"
+            "two": "7",
+            "content": "\"read\""
         },
         "10": {
             "type": "action",
-            "content": "astContext.reads[name] = true",
-            "one": "1"
+            "one": "72",
+            "content": "astContext.reads[name] = true"
         },
         "11": {
             "type": "select",
@@ -182,13 +182,6 @@
             "two": "",
             "content": "operation = \"none\""
         },
-        "68": {
-            "type": "question",
-            "one": "52",
-            "two": "1",
-            "flag1": 1,
-            "content": "name in astContext.variables"
-        },
         "69": {
             "type": "case",
             "one": "4",
@@ -205,6 +198,11 @@
             "type": "action",
             "one": "3",
             "content": "name = getSelfVariable(node)"
+        },
+        "72": {
+            "type": "action",
+            "one": "1",
+            "content": "astContext.variables[name] = true"
         }
     },
     "type": "drakon",

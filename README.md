@@ -135,8 +135,6 @@ function example04() { // The module function
 
     function Simple() { // The class factory function.
         var self = {}; // It is important to use the word "self" to refer to the class instance.
-        self.bar = undefined; // Define the "bar" shared variable
-        self.foo = undefined; // Define the "foo" shared variable
         function calculateFoo() { // A trigger
             self.foo = self.bar.origin + self.moo;
         }
@@ -164,18 +162,15 @@ Do not use the JavaScript `class` keyword.
 
 Each class is represented by a function that creates and returns an object.
 
-### 3. Define shared variables
+### 3. Shared variables
 
-Inside each class, declare shared variables by assigning properties to the `self` object:
+You do not need to declare shared variables explicitly.
 
-```javascript
-self.foo = undefined;
-self.bar = undefined;
-```
+Jacy automatically identifies shared variables:
 
-You do not need to declare input variables explicitly.
-
-Jacy automatically identifies input variables from the parameters of public methods and constructors.
+- from the parameters of public methods;
+- from the parameters of constructors;
+- from reading and writing to the properties of the `self` object (for example, `self.bar`).
 
 ### 4. Define methods and triggers
 
@@ -340,20 +335,7 @@ Inside the folder, create a function named `class` and enable its **export** fla
 
 ![A Jacy class function in DrakonTech](/images/class.png)
 
-### 3. Define shared variables
-
-In the body of the `class` function, declare the shared variables, one per line:
-
-```javascript
-self.foo = undefined;
-self.bar = undefined;
-```
-
-Do not declare input variables here.
-
-Jacy derives input variables from constructor parameters and the parameters of public methods.
-
-### 4. Add public methods
+### 3. Add public methods
 
 Create a function inside the class folder and enable its **export** flag.
 
@@ -363,7 +345,7 @@ The method body may be empty. Simply accepting input parameters can be sufficien
 
 ![A Jacy method in DrakonTech](/images/runMe.png)
 
-### 5. Add triggers
+### 4. Add triggers
 
 Create a private function inside the class folder.
 

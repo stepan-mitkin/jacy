@@ -12,7 +12,6 @@ function example05funas(runtime) {
             }
         };
         var self = { _type: 'Distance' };
-        self.distance = undefined;
         async function calculateDistance(x1, y1, x2, y2) {
             self.distance = undefined;
             var _plan_ = {};
