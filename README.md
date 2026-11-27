@@ -108,17 +108,14 @@ There are several differences between conventional database triggers and Jacy:
 
 ## Jacy and Prolog
 
-Jacy shares some ideas with Prolog but makes different trade-offs in favour of practical software development.
+Jacy shares some ideas with Prolog but makes different trade-offs.
 
 Both systems use depth-first traversal, but Jacy marks visited nodes to avoid redundant computations.
 
-Jacy deliberately restricts flexibility: each shared variable can be written by only one function, and circular dependencies are rejected at compile time. These restrictions eliminate ambiguity, prevent infinite dependency traversal, and make the overall program structure easier to analyse, visualise, and debug.
+Jacy resolves computational dependencies until all the required inputs are available.
 
-Instead of searching for alternative solutions, Jacy resolves computational dependencies until all the required inputs are available.
+Furthermore, Jacy uses ordinary imperative JavaScript functions as its building blocks. That allows developers to reuse existing libraries, perform I/O, and implement complex algorithms in a familiar way.
 
-Furthermore, Jacy uses ordinary imperative JavaScript functions as its building blocks, allowing developers to reuse existing libraries, perform I/O, and implement complex algorithms in a familiar way.
-
-Jacy sacrifices some of the expressive power of Prolog in exchange for safety, predictability, and ease of integration with conventional software.
 
 ## How to Use Jacy
 
