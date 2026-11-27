@@ -13,7 +13,6 @@ function example05as(runtime) {
         };
         var self = { _type: 'Distance' };
         async function calculateDistance(x1, y1, x2, y2) {
-            self.distance = undefined;
             var _plan_ = {};
             _plan_['chooseLineType'] = true;
             _plan_['printResult'] = true;

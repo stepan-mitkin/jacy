@@ -957,7 +957,6 @@ function rewriteProcedure(context, procedure) {
         fun.body = rewriteAst({}, '', fun.body, planTriggers, astContext);
         body = fun.body.body;
         if (procedure.type === 'method') {
-            clearVariables(context, procedure, body);
             isAsync = findAsyncTriggers(context.procs, procedure);
             if (isAsync) {
                 fun['async'] = true;

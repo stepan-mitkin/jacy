@@ -288,17 +288,8 @@ Jacy provides several guarantees:
 
 However, there are some important limitations.
 
-### 1. Shared variables can lose their previous values
 
-When a public method is called, Jacy resets the shared variables that may be modified by the triggers activated by that method to `undefined`.
-
-This prevents downstream triggers from accidentally using stale results.
-
-However, it can also erase values that you intended to preserve.
-
-Be careful when using shared variables to store persistent state.
-
-### 2. Missing input values can prevent triggers from running
+### 1. Missing input values can prevent triggers from running
 
 A trigger executes only when all the shared variables it reads have values other than `undefined`.
 
@@ -308,7 +299,7 @@ This can make it appear as though the runtime has suddenly stopped executing par
 
 The compiler can detect some structural problems, such as shared variables with no writers and cycles in the dependency graph. However, it does not currently guarantee that every trigger will receive all its required inputs at runtime.
 
-### 3. Side effects require care
+### 2. Side effects require care
 
 Jacy allows triggers to perform side effects.
 

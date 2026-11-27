@@ -13,7 +13,6 @@ function example05fun(runtime) {
         };
         var self = { _type: 'Distance' };
         function calculateDistance(x1, y1, x2, y2) {
-            self.distance = undefined;
             var _plan_ = {};
             _plan_['chooseLineType'] = true;
             _plan_['printResult'] = true;
@@ -64,7 +63,6 @@ function example05fun(runtime) {
         }
         self.calculateDistance = calculateDistance;
         function ctr() {
-            self.distance = undefined;
             var _plan_ = {};
             _plan_['chooseLineType'] = true;
             _plan_['printResult'] = true;
